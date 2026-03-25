@@ -3,6 +3,8 @@
 import { LoginFormSchema, SignUpFormSchema, FormState } from "@/app/lib/definitions";
 
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function login(state: FormState, formData: FormData): Promise<FormState> {
     const supabase = await createClient()
@@ -27,9 +29,12 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
 
     if (signInError) {
         return {
-            message:  signInError.message
+            message: signInError.message
         }
     }
+
+    revalidatePath('/', 'layout')
+    redirect('../dashboard')
 
     return {
         message: "success!"
@@ -71,6 +76,9 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
             message: signUpError.message
         }
     }
+
+    revalidatePath('/', 'layout')
+    redirect('../dashboard')
 
     return {
         message: "success!"
