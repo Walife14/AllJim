@@ -60,11 +60,11 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
 
     if (signUpError) {
         return {
-            errors: signUpError.message
+            message: signUpError.message
         }
     }
 
     return {
-        success: true
+        message: "success!"
     }
 }
