@@ -56,7 +56,15 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
     // if all form fields are valid, proceed with registration logic
     const { email, password } = validatedFields.data
 
-    const { error: signUpError } = await supabase.auth.signUp({ email, password })
+    const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+            data: {
+                role: 'owner'
+            }
+        }
+    })
 
     if (signUpError) {
         return {
