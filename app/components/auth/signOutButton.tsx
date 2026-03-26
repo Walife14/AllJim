@@ -5,8 +5,7 @@ interface Props {
 }
 
 export default function SignOutButton({ gymSlug, route }: Props) {
-    // const logoutAction = `auth/signout?next=/${gymSlug}/${route}/login`
-    const logoutAction = `/${gymSlug}/${route}/login`
+    const logoutAction = `/auth/signout?next=/${gymSlug}/${route}/login`
 
     return (
         <form action={logoutAction} method="POST">
