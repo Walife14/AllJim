@@ -1,7 +1,7 @@
 type Props = {}
 
-export default function Home({}: Props) {
+export default function Home({ }: Props) {
   return (
-    <div>Home</div>
+    <div><h1>Home</h1></div>
   )
 }
