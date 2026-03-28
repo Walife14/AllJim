@@ -41,6 +41,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     }
 }
 
+// this is to create a new user in the system, along with their profile.
 export async function signup(state: FormState, formData: FormData): Promise<FormState> {
     const supabase = await createClient()
 
@@ -64,11 +65,6 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
     const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-            data: {
-                role: 'owner'
-            }
-        }
     })
 
     if (signUpError) {
@@ -78,7 +74,7 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
     }
 
     revalidatePath('/', 'layout')
-    redirect('../dashboard')
+    redirect('/')
 
     return {
         message: "success!"
