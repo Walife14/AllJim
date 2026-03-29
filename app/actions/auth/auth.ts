@@ -34,7 +34,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     }
 
     revalidatePath('/', 'layout')
-    redirect('../dashboard')
+    redirect('/')
 
     return {
         message: "success!"
@@ -65,6 +65,11 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
     const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+            data: {
+                role: 'owner'
+            }
+        }
     })
 
     if (signUpError) {

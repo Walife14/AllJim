@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState } from "react"
-import { signup } from "@/app/actions/owner/auth"
+import { signup } from "@/app/actions/auth/auth"
 import { FormState } from "@/app/lib/definitions"
 
 type Props = {}
