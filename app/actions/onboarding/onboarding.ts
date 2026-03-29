@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from "@/lib/supabase/server"
+import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 export type onboardingData = {
@@ -28,8 +29,6 @@ export async function onboardGymAction(formData: onboardingData): Promise<any> {
         }
     }
 
-    console.log(user.id)
-
     // insert the gym
     const { data: gymData, error: gymError } = await supabase
         .from('gyms')
@@ -43,6 +42,8 @@ export async function onboardGymAction(formData: onboardingData): Promise<any> {
             city: formData.addressCity,
             country: formData.addressCountry
         })
+        .select()
+        .single()
 
     if (gymError) {
         if (gymError.code === '23505') return {
@@ -53,6 +54,6 @@ export async function onboardGymAction(formData: onboardingData): Promise<any> {
         }
     }
 
-    // revalidatePath('/', 'layout')
-    // redirect(`${gym.slug}/management`)
+    revalidatePath('/', 'layout')
+    redirect(`${gymData.slug}/management`)
 }

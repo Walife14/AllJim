@@ -31,20 +31,12 @@ export default function Onboarding({ }: Props) {
             setStep(step + 1)
         } else {
             // set loading to true
-            // const payload: onboardingData = {
-            //     gymName: formData.gymName,
-            //     gymSlug: formData.gymSlug,
-            //     addressLine1: formData.addressLine1,
-            //     addressLine2: formData.addressLine2,
-            //     addressPost_code: formData.addressPost_code,
-            //     addressCity: formData.addressCity,
-            //     addressCountry: formData.addressCountry
-            // }
 
             const result = await onboardGymAction(formData)
 
             if (result?.error) {
                 // set loading false
+                console.log(result.error)
                 // tell user theres an error
             }
         }
