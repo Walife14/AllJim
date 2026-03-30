@@ -47,6 +47,8 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
 
     // validate form fields
     const validatedFields = SignUpFormSchema.safeParse({
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
         email: formData.get("email"),
         password: formData.get("password"),
         confirmPassword: formData.get("confirmPassword")
@@ -60,14 +62,16 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
     }
 
     // if all form fields are valid, proceed with registration logic
-    const { email, password } = validatedFields.data
+    const { firstName, lastName, email, password } = validatedFields.data
 
     const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
             data: {
-                role: 'owner'
+                role: 'owner',
+                first_name: firstName.trim(), // unsure there are no spaces before and after
+                last_name: lastName.trim() // unsure there are no spaces before and after
             }
         }
     })

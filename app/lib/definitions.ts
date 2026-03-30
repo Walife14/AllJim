@@ -6,6 +6,8 @@ export type FormState = {
         email?: string[];
         password?: string[];
         confirmPassword?: string[];
+        firstName?: string[];
+        lastName?: string[];
     }
 }
 
@@ -19,6 +21,14 @@ export const LoginFormSchema = z.object({
 
 export const SignUpFormSchema = z.object({
     email: z.email({ error: "Please enter a valid email address." }).trim(),
+    firstName: z
+        .string()
+        .regex(/^[a-zA-Z]+$/, { error: 'First name cannot contain numbers or special characters.' })
+        .trim(),
+    lastName: z
+        .string()
+        .regex(/^[a-zA-Z]+$/, { error: 'Only letters are allowed.' })
+        .trim(),
     password: z
         .string()
         .min(8, { error: "Password must be at least 8 characters long." })
@@ -38,7 +48,7 @@ export const SignUpFormSchema = z.object({
         })
         .trim(),
 })
-.refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
-})
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match.",
+        path: ["confirmPassword"],
+    })
