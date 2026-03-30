@@ -135,7 +135,7 @@ describe('Signup Action', () => {
 
         const result = await signup({}, formData) as FormState
 
-        expect(result.errors?.firstName).toContain('Last name cannot contain numbers or special characters.')
+        expect(result.errors?.lastName).toContain('Last name cannot contain numbers or special characters.')
     })
     it('Should return an error if the last name contains a special character', async () => {
         const formData = new FormData()
@@ -147,6 +147,6 @@ describe('Signup Action', () => {
 
         const result = await signup({}, formData) as FormState
 
-        expect(result.errors?.firstName).toContain('Last name cannot contain numbers or special characters.')
+        expect(result.errors?.lastName).toContain('Last name cannot contain numbers or special characters.')
     })
 })

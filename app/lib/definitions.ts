@@ -27,7 +27,7 @@ export const SignUpFormSchema = z.object({
         .trim(),
     lastName: z
         .string()
-        .regex(/^[a-zA-Z]+$/, { error: 'Only letters are allowed.' })
+        .regex(/^[a-zA-Z]+$/, { error: 'Last name cannot contain numbers or special characters.' })
         .trim(),
     password: z
         .string()
