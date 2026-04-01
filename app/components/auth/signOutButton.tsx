@@ -1,16 +1,20 @@
 
 interface Props {
-    gymSlug: string;
-    route: 'owner' | 'member';
+    gymSlug?: string;
+    route?: 'owner' | 'member';
 }
 
 export default function SignOutButton({ gymSlug, route }: Props) {
-    const logoutAction = `/auth/signout?next=/${gymSlug}/${route}/login`
+
+    let logoutAction = `/auth/signout`
+
+    // if owner concat the gymslug and route
+    // const logoutAction = `/auth/signout?next=/${gymSlug}/${route}/login`
 
     return (
         <form action={logoutAction} method="POST">
             <button
-                className="underline text-blue-700 pointer"
+                className="pointer"
                 type="submit">
                 Sign out
             </button>

@@ -1,25 +1,17 @@
-import Link from "next/link";
+import { getUserProfileAction } from "../actions/auth/get-user";
+import Navbar from "../components/marketing/Navbar";
 
 type Props = {
     children: React.ReactNode;
 }
 
-export default function layout({ children }: Props) {
+export default async function MarketingLayout({ children }: Props) {
+    const { data: user } = await getUserProfileAction()
+
     return (
         <>
-            <nav>
-                <div>
-                    <Link href="/">AllJim</Link>
-                    <ul>
-                        <li>
-                            <Link href="/login">Login</Link>
-                        </li>
-                        <li>
-                            <Link href="/signup">Sign up</Link>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <Navbar user={user} />
+
             {children}
         </>
     )

@@ -7,10 +7,12 @@ export default function Home({ }: Props) {
     <div>
       <section>
 
-        <h1>Welcome to AllJim</h1>
-        <p>Your all-in-one gym management platform.</p>
+        <div className='flex flex-col items-center'>
+          <h1>Welcome to AllJim</h1>
+          <p>Your all-in-one gym management platform.</p>
 
-        <Link href="/onboarding">Manage my gym using AllJim</Link>
+          <Link href="/onboarding">Manage my gym using AllJim</Link>
+        </div>
 
       </section>
 
