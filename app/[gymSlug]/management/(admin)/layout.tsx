@@ -1,8 +1,6 @@
+
 // components
-import SignOutButton from "@/app/components/auth/signOutButton";
 import ManagementNavbar from "@/app/components/management/ManagementNavbar";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 
 type Props = {
     children: React.ReactNode;
