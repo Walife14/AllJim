@@ -36,6 +36,7 @@ export default async function ManagementLayout({ children, params }: Props) {
 
     // handle redirection based on role/ownership
     if (error || !membership) {
+        console.log(error)
         return redirect(`/${slug}/member/join`)
     }
 

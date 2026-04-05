@@ -12,6 +12,9 @@ export default function ManagementNavbar({ gymSlug }: Props) {
                     <Link href={`/${gymSlug}/management`}>Dashboard</Link>
                 </li>
                 <li>
+                    <Link href={`/${gymSlug}/management/members`}>Members</Link>
+                </li>
+                <li>
                     <Link href={`/${gymSlug}/management/revenue`}>Revenue</Link>
                 </li>
                 <li>
