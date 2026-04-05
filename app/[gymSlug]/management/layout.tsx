@@ -45,7 +45,7 @@ export default async function ManagementLayout({ children, params }: Props) {
 
     return (
         <div className="flex h-screen overflow-hidden gap-x-1">
-            <ManagementNavbar />
+            <ManagementNavbar gymSlug={slug} />
             <main>
                 {children}
             </main>

@@ -41,7 +41,7 @@ export default async function GymRootPage({ params }: Props) {
     const role = membership.role
 
     if (role === 'owner') { // in the future add role for staff members?
-        return redirect(`/${gymSlug}/management/dashboard`)
+        return redirect(`/${gymSlug}/management`)
     }
 
     // default for regular members
