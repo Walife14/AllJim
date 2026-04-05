@@ -33,7 +33,6 @@ export async function onboardGymAction(formData: onboardingData): Promise<any> {
     const { data: gymData, error: gymError } = await supabase
         .from('gyms')
         .insert({
-            owner_id: user.id,
             name: formData.gymName,
             slug: formData.gymSlug,
             address_line_1: formData.addressLine1,
@@ -50,10 +49,10 @@ export async function onboardGymAction(formData: onboardingData): Promise<any> {
             error: "URL slug already taken"
         }
         return {
-            error: "this is the error"
+            error: gymError
         }
     }
 
     revalidatePath('/', 'layout')
-    redirect(`${gymData.slug}/management`)
+    redirect(`${gymData.slug}/management/dashboard`)
 }

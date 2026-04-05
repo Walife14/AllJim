@@ -2,6 +2,13 @@
 
 import { createClient } from '@/lib/supabase/server'
 
+type MembershipRow = {
+    gym_id: string;
+    role: 'owner' | 'staff' | 'member'
+    user_id: string
+    status: 'active' | 'inactive' | 'banned'
+}
+
 export type GymData = {
     id: string
     name: string
@@ -15,7 +22,7 @@ export type GymData = {
 
 type GymResponse = Promise<{
     error: string | null
-    data: GymData | null
+    data: GymData[]
 }>
 
 export async function getCurrentUserGymAction(): GymResponse {
@@ -26,56 +33,53 @@ export async function getCurrentUserGymAction(): GymResponse {
 
     if (!user || authError) {
         return {
-            error: 'Not authenticated.', data: null
+            error: 'Not authenticated.', data: []
         }
     }
 
-    // get the currently signed in users profile and grab gym_id
-    const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('gym_id')
-        .eq('id', user.id)
-        .single()
-
-    if (profileError) {
+    // check memberships table to see if there is an entry with user id
+    const { data: gymMemberships, error: membershipError } = await supabase
+        .from('memberships')
+        .select('gym_id, role, user_id, status')
+        .eq('user_id', user.id)
+    
+    if (membershipError) {
         return {
-            error: 'Could not fetch currently signed in user profile', data: null
-        }
-    }
-    if (!profile.gym_id) {
-        return {
-            error: 'User does not have a gym associated with account', data: null
+            error: 'Could not access gym memberships table to find memberships', data: []
         }
     }
 
-    // now we have a user with a profile and a gym_id
+    // get the list of gym_ids the user is associated with
+    const gymIds: string[] = gymMemberships?.map((m: MembershipRow) => m.gym_id) || []
 
-    // grab the gym they're associated with
-
-    const { data: gym, error: gymError } = await supabase
+    // grab the gym(s) they're associated with
+    const { data: gyms, error: gymError } = await supabase
         .from('gyms')
         .select('id, name, slug, address_line_1, address_line_2, post_code, city, country')
-        .eq('id', profile.gym_id)
-        .single()
+        .eq('id', gymIds)
 
-    if (!gym || gymError) {
+    if (!gyms || gymError) {
         return {
-            error: 'Gym not found, or could not fetch the gym.', data: null
+            error: 'Gym not found, or could not fetch the gym.', data: []
         }
     }
+
+    const gymsList: GymData[] = gyms.map((g: GymData) => {
+        return {
+            id: g.id,
+            name: g.name,
+            slug: g.slug,
+            address_line_1: g.address_line_1,
+            address_line_2: g.address_line_2,
+            post_code: g.post_code,
+            city: g.city,
+            country: g.country
+        }
+    })
 
     // everything is good return the gym associated with currently signed in user
     return {
         error: null,
-        data: {
-            id: gym.id,
-            name: gym.name,
-            slug: gym.slug,
-            address_line_1: gym.address_line_1,
-            address_line_2: gym.address_line_2,
-            post_code: gym.post_code,
-            city: gym.city,
-            country: gym.country
-        }
+        data: gymsList
     }
 }

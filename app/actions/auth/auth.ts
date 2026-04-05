@@ -69,7 +69,6 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
         password,
         options: {
             data: {
-                role: 'owner',
                 first_name: firstName.trim(), // unsure there are no spaces before and after
                 last_name: lastName.trim() // unsure there are no spaces before and after
             }

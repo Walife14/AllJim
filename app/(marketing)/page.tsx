@@ -6,7 +6,7 @@ type Props = {}
 
 export default async function Home({ }: Props) {
   const { data: user } = await getUserProfileAction()
-  const { data: gym } = await getCurrentUserGymAction()
+  const { data: gyms } = await getCurrentUserGymAction()
 
 
   return (
@@ -17,19 +17,21 @@ export default async function Home({ }: Props) {
           {user && (
             <p>{user.first_name}</p>
           )}
-          {gym ? (
+          {gyms.length === 0 && (
+            <>
+              <p>Your all-in-one gym management platform.</p>
+              
+              <p>It doesn&apos;t seem like you are part of a gym yet.</p>
+              <Link href="/onboarding">Manage my gym using AllJim</Link>
+            </>
+          )}
+          {gyms.length > 0 && gyms.map((gym) => (
             <>
               <p>It seems like you're already a part of {gym.name}</p>
 
               <Link href={`/${gym.slug}/portal`}>Go to {gym.name}&apos;s portal</Link>
             </>
-          ) : (
-            <>
-              <p>Your all-in-one gym management platform.</p>
-
-              <Link href="/onboarding">Manage my gym using AllJim</Link>
-            </>
-          )}
+          ))}
         </div>
 
       </section>

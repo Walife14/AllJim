@@ -7,7 +7,6 @@ export type UserData = {
     email: string
     first_name: string
     last_name: string
-    gym_id: string
 }
 
 type UserProfileResponse = Promise<{
@@ -28,7 +27,7 @@ export async function getUserProfileAction(): UserProfileResponse {
     // grab their profile
     const { data: profile, error: profileError } = await supabase
         .from('profiles')
-        .select('first_name, last_name, role, gym_id')
+        .select('first_name, last_name')
         .eq('id', user.id)
         .single()
 
@@ -45,7 +44,6 @@ export async function getUserProfileAction(): UserProfileResponse {
             email: user.email as string,
             first_name: profile.first_name as string,
             last_name: profile.last_name as string,
-            gym_id: profile.gym_id
         }
     }
 
