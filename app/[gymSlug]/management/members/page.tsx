@@ -19,13 +19,14 @@ interface MemberWithProfile {
     }
 }
 
-const VALID_STATUSES = ['active', 'inactive', 'overdue', 'cancelled']
+const VALID_STATUSES = ['active', 'inactive']
 
 export default async function MembersPage({ params, searchParams }: Props) {
     const { gymSlug: slug } = await params
     const { status, search } = await searchParams
 
     // add status filter and search params
+    const validatedStatus = VALID_STATUSES.includes(status as string) ? status : undefined
 
     const supabase = await createClient()
 
@@ -39,7 +40,7 @@ export default async function MembersPage({ params, searchParams }: Props) {
         return <div>Failed to get gym</div>
     }
 
-    const { data: members, error } = await supabase
+    let query = supabase
         .from('memberships')
         .select(`
             status,
@@ -51,6 +52,11 @@ export default async function MembersPage({ params, searchParams }: Props) {
         `)
         .eq('gym_id', gym.id)
     
+    if (validatedStatus) {
+        query = query.eq('status', status)
+    }
+
+    const { data: members, error } = await query 
 
     if (error) {
         console.error("database error: ", error)
