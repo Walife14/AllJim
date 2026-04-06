@@ -25,7 +25,7 @@ export default async function MembersPage({ params, searchParams }: Props) {
     const { gymSlug: slug } = await params
     const { status, search } = await searchParams
 
-    // add status filter and search params
+    // check whether the status they have in the url is a valid status
     const validatedStatus = VALID_STATUSES.includes(status as string) ? status : undefined
 
     const supabase = await createClient()
@@ -45,18 +45,25 @@ export default async function MembersPage({ params, searchParams }: Props) {
         .select(`
             status,
             role,
-            profiles (
+            profiles!inner (
                 first_name,
                 last_name
             )
         `)
         .eq('gym_id', gym.id)
-    
+
+
+    if (search) {
+        query = query.or(`first_name.ilike.%${search}%, last_name.ilike.%${search}%`, {
+            referencedTable: 'profiles'
+        })
+    }
+
     if (validatedStatus) {
         query = query.eq('status', status)
     }
 
-    const { data: members, error } = await query 
+    const { data: members, error } = await query
 
     if (error) {
         console.error("database error: ", error)
