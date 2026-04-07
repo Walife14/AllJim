@@ -1,5 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 
+// components
+import MembersFilter from "@/app/components/management/MembersFilter"
+
 type Props = {
     params: Promise<{
         gymSlug: string
@@ -74,6 +77,8 @@ export default async function MembersPage({ params, searchParams }: Props) {
         <>
             <h1>Members</h1>
             <p>This page shows a list of all the members currently attending your gym and their details.</p>
+
+            <MembersFilter />
 
             <div>
                 {members?.length === 0 ? (
