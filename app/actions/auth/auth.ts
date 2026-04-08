@@ -61,6 +61,27 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
 export async function signup(state: FormState, formData: FormData): Promise<FormState> {
     const supabase = await createClient()
 
+    const gymSlug = formData.get("gymSlug")
+
+    let gym_id: string | null = null;
+
+    if (gymSlug) {
+    // check if the gym exists - grab gym_id
+        const { data: gym, error } = await supabase
+            .from('gyms')
+            .select('id')
+            .eq('slug', gymSlug)
+            .single()
+        
+        if (error || !gym) {
+            return {
+                message: 'We could not find the gym using the slug - user not signed up.'
+            }
+        }
+
+        gym_id = gym.id
+    }
+    
     // validate form fields
     const validatedFields = SignUpFormSchema.safeParse({
         firstName: formData.get("firstName"),
@@ -86,7 +107,8 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
         options: {
             data: {
                 first_name: firstName.trim(), // unsure there are no spaces before and after
-                last_name: lastName.trim() // unsure there are no spaces before and after
+                last_name: lastName.trim(), // unsure there are no spaces before and after
+                gym_id: gym_id
             }
         }
     })
@@ -98,9 +120,12 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
     }
 
     revalidatePath('/', 'layout')
-    redirect('/')
 
-    return {
-        message: "success!"
+    if (gymSlug) {
+        // redirect to that gymSlug location
+        redirect(`/${gymSlug}`)
     }
+
+    // fallback route - marketing signup
+    redirect('/')
 }

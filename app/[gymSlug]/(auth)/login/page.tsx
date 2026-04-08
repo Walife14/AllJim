@@ -1,6 +1,7 @@
 
 // components
 import LoginForm from "@/app/components/auth/LoginForm"
+import Link from "next/link"
 
 type Props = {
     params: Promise<{
@@ -16,6 +17,8 @@ export default async function LoginPage({ params }: Props) {
             <h2>Login</h2>
             
             <LoginForm gymSlug={slug} />
+            
+            <Link href={`/${slug}/join`}>Click here to join this gym if not yet a member.</Link>
         </div>
     )
 }

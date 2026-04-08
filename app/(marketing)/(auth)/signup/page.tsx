@@ -1,49 +1,15 @@
-'use client'
-
-import { useActionState } from "react"
-import { signup } from "@/app/actions/auth/auth"
-import { FormState } from "@/app/lib/definitions"
+import SignUpForm from "@/app/components/auth/SignUpForm"
 
 type Props = {}
 
-const initialState: FormState = {}
 
 export default function Signup({ }: Props) {
-  const [state, action, pending] = useActionState(signup, initialState)
 
   return (
     <>
-      <h1>Gym owner signup</h1>
+      <h1>Sign Up</h1>
 
-      <form action={action}>
-        <div>
-          <label htmlFor="firstName">First name</label>
-          <input type="text" id="firstName" name="firstName" placeholder="First name" required/>
-        </div>
-        {state?.errors?.firstName && <p>{state.errors.firstName}</p>}
-        <div>
-          <label htmlFor="lastName">Last name</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Last name" required/>
-        </div>
-        {state?.errors?.lastName && <p>{state.errors.lastName}</p>}
-        <div>
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Email address" required/>
-        </div>
-        {state?.errors?.email && <p>{state.errors.email}</p>}
-        <div>
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" required/>
-        </div>
-        {state?.errors?.password && <p>{state.errors.password}</p>}
-        <div>
-          <label htmlFor="confirmPassword">Confirm password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="confirmPassword" required/>
-        </div>
-        {state?.errors?.confirmPassword && <p>{state.errors.confirmPassword}</p>}
-      
-        <button type="submit" disabled={pending}>{pending ? 'Signing up...' : 'Sign up'}</button>
-      </form>
+      <SignUpForm />
     </>
   )
 }
