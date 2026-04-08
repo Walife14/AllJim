@@ -14,9 +14,9 @@ export default async function GymRootPage({ params }: Props) {
     // identity
     const { data: { user } } = await supabase.auth.getUser()
 
-    // if no user send to the member login portal
+    // if no user send to the login portal
     if (!user) {
-        return redirect(`/${gymSlug}/member/login`)
+        return redirect(`/${gymSlug}/login`)
     }
 
     // we have a user check if they have a gym membership
@@ -34,7 +34,7 @@ export default async function GymRootPage({ params }: Props) {
     
     // if they aren't a member of this gym, redirect to join the gym
     if (error || !membership) {
-        return redirect(`/${gymSlug}/member/join`)
+        return redirect(`/${gymSlug}/join`)
     }
 
     // they are a member of this gym -> check role and route
