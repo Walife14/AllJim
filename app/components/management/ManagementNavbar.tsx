@@ -21,6 +21,9 @@ export default function ManagementNavbar({ gymSlug }: Props) {
                     <Link href={`/${gymSlug}/management/revenue`}>Revenue</Link>
                 </li>
                 <li>
+                    <Link href={`/${gymSlug}/management/equipment`}>Equipment</Link>
+                </li>
+                <li>
                     <Link href={`/${gymSlug}/management/settings`}>Settings</Link>
                 </li>
             </ul>
