@@ -46,6 +46,7 @@ export default function SignUpForm({ gymSlug }: Props) {
             {state?.errors?.confirmPassword && <p>{state.errors.confirmPassword}</p>}
 
             <button type="submit" disabled={pending}>{pending ? 'Signing up...' : 'Sign up'}</button>
+            {state.message && <p>{state.message}</p>}
         </form>
     )
 }
