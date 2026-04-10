@@ -1,3 +1,6 @@
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+
 type Props = {
     children: React.ReactNode
     params: Promise<{
@@ -7,14 +10,36 @@ type Props = {
 
 export default async function layout({ children, params }: Props) {
     const { gymSlug: slug } = await params
+    const supabase = await createClient()
 
-    // TODO: grab user
+    // grab user
+    const { data: { user } } = await supabase.auth.getUser()
 
-    // TODO: no user redirect back to login
+    // no user redirect back to login
+    if (!user) {
+        redirect(`/${slug}/login`)
+    }
+    
+    // grab the gym id
+    const { data: gym } = await supabase
+        .from('gyms').select('id').eq('slug', slug).single()
+    
+    // if no gym redirect away from this page
+    if (!gym) {
+        redirect('/')
+    }
 
-    // TODO: check whether they are part of the current gym route
+    // check whether they are part of the current gym route
+    const { data: membership } = await supabase
+        .from('memberships')
+        .select()
+        .match({ user_id: user.id, gym_id: gym.id })
+        .single()
 
-    // TODO: not part of gym return and redirect to join
+    // not part of gym return and redirect to join
+    if (!membership) {
+        redirect(`/${slug}/join`)
+    }
 
     return (
         <>
