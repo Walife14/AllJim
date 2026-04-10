@@ -46,6 +46,6 @@ export default async function GymRootPage({ params }: Props) {
 
     // default for regular members
 
-    return redirect(`/${gymSlug}/member/portal`)
+    return redirect(`/${gymSlug}/portal`)
 
 }

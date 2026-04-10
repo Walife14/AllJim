@@ -46,7 +46,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
                 redirect(`/${gymSlug}/management`)
             }
 
-            redirect(`/${gymSlug}/members`)
+            redirect(`/${gymSlug}/portal`)
         } else {
             redirect(`/${gymSlug}/join?reason=unregistered`)
         }
