@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 
 // components
 import MembersFilter from "@/app/components/management/MembersFilter"
+import Link from "next/link"
 
 type Props = {
     params: Promise<{
@@ -49,6 +50,7 @@ export default async function MembersPage({ params, searchParams }: Props) {
             status,
             role,
             profiles!inner (
+                id,
                 first_name,
                 last_name
             )
@@ -85,12 +87,12 @@ export default async function MembersPage({ params, searchParams }: Props) {
                     <p>No members found.</p>
                 ) : (
                     members?.map((m: any, index: number) => (
-                        <div key={index} className="flex gap-4">
+                        <Link href={`/${slug}/management/members/${m.profiles.id}`} key={index} className="flex gap-4">
                             <span>{m.profiles.first_name}</span>
                             <span>{m.profiles.last_name}</span>
                             <span>{m.role}</span>
                             <span>{m.status}</span>
-                        </div>
+                        </Link>
                     )
                     )
                 )}
