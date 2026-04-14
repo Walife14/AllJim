@@ -5,6 +5,9 @@ import Link from "next/link"
 import ProfileHeader from "./_components/ProfileHeader"
 import MembershipStatus from "./_components/MembershipStatus"
 import Contact from "./_components/Contact"
+import StaffNotes from "./_components/StaffNotes"
+import AccessHistory from "./_components/AccessHistory"
+import BillingHistory from "./_components/BillingHistory"
 
 type Props = {
     params: Promise<{
@@ -64,6 +67,15 @@ export default async function MemberPage({ params }: Props) {
 
                 {/* contact information */}
                 <Contact />
+
+                {/* staff notes */}
+                <StaffNotes />
+
+                {/* access history: their list of tap-ins into the gym; average weekly visits */}
+                <AccessHistory />
+
+                {/* billing history: transation list: date of payment, amount paid, time added if gym membership, staff who processed */}
+                <BillingHistory />
             </div>
         </div>
     )
