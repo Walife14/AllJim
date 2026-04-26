@@ -13,6 +13,7 @@ import { createClient } from "@/lib/supabase/server"
 
 // types
 import { MembershipReceipt, MembershipUnit } from '@/types/membership'
+import { revalidatePath } from 'next/cache'
 
 export type MembershipUpdateResponse = {
     error?: string | null
@@ -20,109 +21,90 @@ export type MembershipUpdateResponse = {
 }
 
 export async function addMembershipTime(state: MembershipUpdateResponse, formData: FormData): Promise<MembershipUpdateResponse> {
-    const supabase = await createClient()
-    const membershipId = formData.get('membershipId')
-    const unit = formData.get('unit') as MembershipUnit
-    const amountStr = formData.get('amount')
-    const amount = Number(amountStr)
+    try {
+        const supabase = await createClient()
+        const membershipId = formData.get('membershipId')
+        const unit = formData.get('unit') as MembershipUnit
+        const amountStr = formData.get('amount')
+        const amount = Number(amountStr)
 
-    if (!amountStr || isNaN(amount) || amount <= 0) {
-        return { error: "Please provide a valid amount." }
-    }
+        if (!amountStr || isNaN(amount) || amount <= 0) {
+            return { error: "Please provide a valid amount." }
+        }
 
-    // grab the current auth
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+        // grab the current auth
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (!user || authError) throw new Error(authError?.message || 'Unauthorized')
 
-    if (!user || authError) {
+        // grab the current user for their first_name and last_name
+        const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('first_name, last_name')
+            .eq('id', user.id)
+            .single()
+
+        if (!profile || profileError) throw new Error('Staff profile not found.')
+
+        // grab the current membership by its id for the user
+        const { data: membership, error: membershipError } = await supabase
+            .from('memberships')
+            .select()
+            .eq('id', membershipId)
+            .single()
+
+        if (membershipError) throw new Error(membershipError?.message || "Membership not found.")
+
+        // calculate the new expiry
+        const newExpiry = await calculateExpiry(membership.expires_at, unit, amount)
+
+        // create the receipt
+
+        // create receipt object
+        const receipt: MembershipReceipt = {
+            gym_id: membership.gym_id,
+            membership_id: membership.id,
+            amount_added: amount,
+            unit,
+            transaction_type: 'management',
+            payment_method: 'none',
+            // notes: notes to be added
+            metadata: {
+                staff_name: `${profile.first_name} ${profile.last_name}`,
+                entry_point: 'management_portal',
+                old_expiry: membership.expires_at,
+                new_expiry: newExpiry.toISOString()
+            }
+        }
+
+        const { error: createReceiptError } = await supabase
+            .from('membership_history')
+            .insert(receipt)
+
+        if (createReceiptError) throw new Error(createReceiptError.message)
+
+        // NOTE: for future check status of membership to check if user is banned, or something else
+        // if banned or so then return an error notifying them that the user is a banned user
+        // for code below this assume user is not banned or kicked out as status
+
+
+        // membership_history receipt should be inserted now update membership record
+        const { error: updateMembershipError } = await supabase
+            .from('memberships')
+            .update({ status: 'active', expires_at: newExpiry })
+            .eq('id', membershipId)
+
+        if (updateMembershipError) throw new Error(updateMembershipError.message)
+
+        // UI refresh
+        revalidatePath('/management', 'layout')
+
+        return { error: null, success: true }
+    } catch (err: any) {
+        console.error("Critical membership error: ", err.message)
         return {
-            error: authError?.message || 'No current user found.',
+            error: err.message || "An unexpected error occurred while updating membership",
             success: false
         }
-    }
-
-    // grab the current user for their first_name and last_name
-    const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('first_name, last_name')
-        .eq('id', user.id)
-        .single()
-
-    if (!profile || profileError) {
-        return {
-            error: profileError.message || 'No profile found for current user.',
-            success: false
-        }
-    }
-
-    // grab the current membership by its id for the user
-    const { data: membership, error: membershipError } = await supabase
-        .from('memberships')
-        .select()
-        .eq('id', membershipId)
-        .single()
-
-    if (membershipError) {
-        return {
-            error: membershipError.message,
-            success: false
-        }
-    }
-
-    // calculate the new expiry
-    const newExpiry = await calculateExpiry(membership.expires_at, unit, amount)
-
-    // create the receipt
-    // await generateReceipt()
-
-    // create receipt object
-    const receipt: MembershipReceipt = {
-        gym_id: membership.gym_id,
-        membership_id: membership.id,
-        amount_added: amount,
-        unit,
-        transaction_type: 'management',
-        payment_method: 'none',
-        // notes: notes to be added
-        metadata: {
-            staff_name: `${profile.first_name} ${profile.last_name}`,
-            entry_point: 'management_portal',
-            old_expiry: membership.expires_at,
-            new_expiry: newExpiry.toISOString()
-        }
-    }
-
-    const { error: createReceiptError } = await supabase
-        .from('membership_history')
-        .insert(receipt)
-    
-    if (createReceiptError) {
-        return {
-            error: createReceiptError.message,
-            success: false
-        }
-    }
-
-    // NOTE: for future check status of membership to check if user is banned, or something else
-    // if banned or so then return an error notifying them that the user is a banned user
-    // for code below this assume user is not banned or kicked out as status
-
-
-    // membership_history receipt should be inserted now update membership record
-    const { error: updateMembershipError } = await supabase
-        .from('memberships')
-        .update({ status: 'active', expires_at: newExpiry })
-        .eq('id', membershipId)
-
-    if (updateMembershipError) {
-        return {
-            error: updateMembershipError.message,
-            success: false
-        }
-    }
-
-    return {
-        error: null,
-        success: true
     }
 }
 
