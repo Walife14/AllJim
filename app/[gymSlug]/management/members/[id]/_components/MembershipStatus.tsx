@@ -1,12 +1,8 @@
 'use client'
 
-import { useActionState } from "react"
-
-// actions
-import { addMembershipTime, MembershipUpdateResponse } from "@/app/actions/management/memberships"
 import { format } from "date-fns"
-
-// types
+import AddMembershipModal from "./AddMembershipModal"
+import { useState } from "react"
 
 type Props = {
     membershipId: string,
@@ -14,10 +10,8 @@ type Props = {
     expires_at: string
 }
 
-const initialState: MembershipUpdateResponse = {}
-
 export default function MembershipStatus({ membershipId, status, expires_at }: Props) {
-    const [state, formAction, pending] = useActionState(addMembershipTime, initialState)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     const formattedDate = expires_at ? format(new Date(expires_at), 'dd/MM/yyyy') : 'No previous membership.'
 
@@ -33,42 +27,13 @@ export default function MembershipStatus({ membershipId, status, expires_at }: P
                     <p>Membership Expiration</p>
                     <span>{formattedDate}</span>
                 </div>
-                <div className="col-span-2 bg-white rounded-lg p-2">
-                    <p>Membership Quick Edits</p>
-                    <ul className="flex gap-2">
-                        <li>
-                            <button className="bg-green-400 p-2 rounded-lg" disabled>+1 Month</button>
-                        </li>
-                        <li>
-                            <button className="bg-green-400 p-2 rounded-lg" disabled>+3 Months</button>
-                        </li>
-                        <li>
-                            <button className="bg-green-400 p-2 rounded-lg" disabled>+1 Year</button>
-                        </li>
-                    </ul>
+                <div className="col-span-2 rounded-lg p-2">
+                    <button className="bg-neutral-600 text-white p-2 text-center rounded-lg cursor-pointer" onClick={() => setIsModalOpen(true)}>Extend Membership</button>
                 </div>
-                <form action={formAction}>
-                    <input type="hidden" name="membershipId" value={membershipId} />
-
-                    {/* radio for unit type */}
-                    <label>
-                        Select unit type:
-                        <select name="unit" defaultValue="months">
-                            <option value="days">Days</option>
-                            <option value="weeks">Weeks</option>
-                            <option value="months">Months</option>
-                            <option value="years">Years</option>
-                        </select>
-                    </label>
-
-                    <div>
-                        <label htmlFor="amount">Amount</label>
-                        <input type="text" id="amount" name="amount" placeholder="Amount" required />
-                    </div>
-
-                    <button type="submit" disabled={pending}>{pending ? 'Loading' : 'Test Func Button'}</button>
-                </form>
             </div>
+            {isModalOpen && (
+                <AddMembershipModal membershipId={membershipId} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            )}
         </div>
     )
 }
