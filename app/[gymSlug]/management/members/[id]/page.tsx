@@ -45,7 +45,7 @@ export default async function MemberPage({ params }: Props) {
     // TODO: grab the user profile
     const { data: profile } = await supabase
         .from('profiles')
-        .select('id, first_name, last_name')
+        .select('id, first_name, last_name, email, phone')
         .eq('id', userId)
         .single()
 
@@ -66,7 +66,7 @@ export default async function MemberPage({ params }: Props) {
                 <MembershipStatus membershipId={membership.id} status={membership.status} expires_at={membership.expires_at} />
 
                 {/* contact information */}
-                <Contact />
+                <Contact email={profile.email} phone={profile.phone} />
 
                 {/* staff notes */}
                 <StaffNotes />
