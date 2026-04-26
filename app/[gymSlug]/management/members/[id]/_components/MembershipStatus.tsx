@@ -4,16 +4,22 @@ import { useActionState } from "react"
 
 // actions
 import { addMembershipTime, MembershipUpdateResponse } from "@/app/actions/management/memberships"
+import { format } from "date-fns"
+
+// types
 
 type Props = {
-    membershipId: string
+    membershipId: string,
+    status: string,
+    expires_at: string
 }
 
 const initialState: MembershipUpdateResponse = {}
 
-export default function MembershipStatus({ membershipId }: Props) {
+export default function MembershipStatus({ membershipId, status, expires_at }: Props) {
     const [state, formAction, pending] = useActionState(addMembershipTime, initialState)
 
+    const formattedDate = expires_at ? format(new Date(expires_at), 'dd/MM/yyyy') : 'No previous membership.'
 
     return (
         <div className="bg-neutral-200 rounded-lg p-4">
@@ -21,11 +27,11 @@ export default function MembershipStatus({ membershipId }: Props) {
             <div className="grid grid-cols-2 gap-2">
                 <div className="text-center bg-white rounded-lg p-2">
                     <p>Membership Status</p>
-                    <span>Active</span>
+                    <span>{status}</span>
                 </div>
                 <div className="text-center bg-white rounded-lg p-2">
                     <p>Membership Expiration</p>
-                    <span>01/07/2026</span>
+                    <span>{formattedDate}</span>
                 </div>
                 <div className="col-span-2 bg-white rounded-lg p-2">
                     <p>Membership Quick Edits</p>

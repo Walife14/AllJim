@@ -1,3 +1,5 @@
+export type MembershipStatus = 'active' | 'inactive' | 'banned'
+
 export type TransactionType = 'management' | 'kiosk' | 'direct_debit' | 'api';
 
 export type PaymentMethod = 'cash' | 'card' | 'external_card' | 'none' | 'other';

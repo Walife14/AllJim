@@ -32,7 +32,7 @@ export default async function MemberPage({ params }: Props) {
     // TODO: grab the user membership using id and gymslug
     const { data: membership } = await supabase
         .from('memberships')
-        .select('id, role, status, joined_at')
+        .select('id, role, status, joined_at, expires_at')
         .match({ user_id: userId, gym_id: gym.id })
         .single()
 
@@ -63,7 +63,7 @@ export default async function MemberPage({ params }: Props) {
                 <ProfileHeader first_name={profile.first_name} last_name={profile.last_name} user_id={profile.id} joined_at={membership.joined_at} />
 
                 {/* membership status */}
-                <MembershipStatus membershipId={membership.id} />
+                <MembershipStatus membershipId={membership.id} status={membership.status} expires_at={membership.expires_at} />
 
                 {/* contact information */}
                 <Contact />
