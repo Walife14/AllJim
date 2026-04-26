@@ -1,6 +1,20 @@
-type Props = {}
+'use client'
 
-export default function MembershipStatus({ }: Props) {
+import { useActionState } from "react"
+
+// actions
+import { addMembershipTime, MembershipUpdateResponse } from "@/app/actions/management/memberships"
+
+type Props = {
+    membershipId: string
+}
+
+const initialState: MembershipUpdateResponse = {}
+
+export default function MembershipStatus({ membershipId }: Props) {
+    const [state, formAction, pending] = useActionState(addMembershipTime, initialState)
+
+
     return (
         <div className="bg-neutral-200 rounded-lg p-4">
             <h2 className="text-center">Membership Status</h2>
@@ -27,6 +41,27 @@ export default function MembershipStatus({ }: Props) {
                         </li>
                     </ul>
                 </div>
+                <form action={formAction}>
+                    <input type="hidden" name="membershipId" value={membershipId} />
+
+                    {/* radio for unit type */}
+                    <label>
+                        Select unit type:
+                        <select name="unit" defaultValue="months">
+                            <option value="days">Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                            <option value="years">Years</option>
+                        </select>
+                    </label>
+
+                    <div>
+                        <label htmlFor="amount">Amount</label>
+                        <input type="text" id="amount" name="amount" placeholder="Amount" required />
+                    </div>
+
+                    <button type="submit" disabled={pending}>{pending ? 'Loading' : 'Test Func Button'}</button>
+                </form>
             </div>
         </div>
     )
