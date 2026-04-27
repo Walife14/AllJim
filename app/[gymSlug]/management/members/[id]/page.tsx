@@ -60,7 +60,7 @@ export default async function MemberPage({ params }: Props) {
             <Link className="text-sm" href={`/${gymSlug}/management/members`}>Back</Link>
             <div className="flex-1 grid grid-cols-2 gap-2">
                 {/* member Identification  */}
-                <ProfileHeader first_name={profile.first_name} last_name={profile.last_name} user_id={profile.id} joined_at={membership.joined_at} />
+                <ProfileHeader first_name={profile.first_name} last_name={profile.last_name} user_id={profile.id} joined_at={membership.joined_at} membershipId={membership.id} role={membership.role} />
 
                 {/* membership status */}
                 <MembershipStatus membershipId={membership.id} status={membership.status} expires_at={membership.expires_at} />
