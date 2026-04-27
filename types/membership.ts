@@ -6,7 +6,7 @@ export type PaymentMethod = 'cash' | 'card' | 'external_card' | 'none' | 'other'
 
 export type MembershipUnit = 'days' | 'weeks' | 'months' | 'years';
 
-type EntryPoint = 'management_portal' | 'kiosk_tablet'
+export type EntryPoint = 'management_portal' | 'kiosk_tablet'
 
 export interface MembershipReceipt {
   gym_id: string;

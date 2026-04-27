@@ -69,7 +69,7 @@ export default async function MemberPage({ params }: Props) {
                 <Contact email={profile.email} phone={profile.phone} />
 
                 {/* staff notes */}
-                <StaffNotes />
+                <StaffNotes membershipId={membership.id} />
 
                 {/* access history: their list of tap-ins into the gym; average weekly visits */}
                 <AccessHistory />
