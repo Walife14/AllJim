@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
-import Image from "next/image"
+import PassDisplay from "./_components/PassDisplay"
 
 type Props = {
     params: Promise<{
@@ -30,18 +30,7 @@ export default async function PortalPage({ params }: Props) {
         <div>
             <h1>{gym.name}</h1>
 
-            <section>
-                <h2>Your QR code.</h2>
-                {/* TODO: clicking qr code should give it focus ui wise */}
-                <div className="relative w-64 h-64 mx-auto">
-                    <Image
-                        src="/sample-qrcode.png"
-                        alt="Gym Access Pass"
-                        fill
-                        className="object-contain"
-                    />
-                </div>
-            </section>
+            <PassDisplay />
 
             <section>
                 <h2>Your Stats</h2>
