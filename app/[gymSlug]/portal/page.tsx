@@ -1,11 +1,34 @@
+import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 
-type Props = {}
+type Props = {
+    params: Promise<{
+        gymSlug: string
+    }>
+}
 
-export default function PortalPage({ }: Props) {
+export default async function PortalPage({ params }: Props) {
+    const supabase = await createClient()
+    const { gymSlug: slug } = await params
+
+    const { data: gym, error: gymError } = await supabase
+        .from('gyms')
+        .select('name')
+        .eq('slug', slug)
+        .single()
+    
+    if (gymError || !gym) {
+        return (
+            <>
+                <h1>Failed to grab the gym.</h1>
+                <p>{gymError?.message || 'No gym found'}</p>
+            </>
+        )
+    }
+
     return (
         <div>
-            <h1>GYMNAME</h1>
+            <h1>{gym.name}</h1>
 
             <section>
                 <h2>Your QR code.</h2>
@@ -41,7 +64,7 @@ export default function PortalPage({ }: Props) {
             <section>
                 <h2>News</h2>
                 <p>Are you interested in joining pilates class?</p>
-                <p>Would you be interested in a new bench press machine? 
+                <p>Would you be interested in a new bench press machine?
                     We have now added a poll to see what machine our visitors want!</p>
             </section>
 
