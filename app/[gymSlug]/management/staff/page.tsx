@@ -1,35 +1,65 @@
-type Props = {}
+import { createClient } from "@/lib/supabase/server"
+import Link from "next/link"
 
-export default function page({ }: Props) {
+type Props = {
+    params: Promise<{
+        gymSlug: string
+    }>
+}
+
+type MembershipWithProfile = {
+    id: string
+    user_id: string
+    profiles: {
+        email: string
+    }
+}
+
+export default async function StaffPage({ params }: Props) {
+    const supabase = await createClient()
+    const { gymSlug: slug } = await params
+
+    // grab current gym
+    const { data: gym, error: gymError } = await supabase
+        .from('gyms')
+        .select('id')
+        .eq('slug', slug)
+        .single()
+
+    if (!gym || gymError) {
+        return (
+            <p>Failed to grab a gym.</p>
+        )
+    }
+
+    // grab all members that have the role of staff in the memberships and are part of current gym
+    const { data: memberships, error: membershipsError } = await supabase
+        .from('memberships')
+        .select(`id, user_id, profiles!inner (email)
+            `)
+        .match({ gym_id: gym.id, role: 'staff' })
+        .overrideTypes<MembershipWithProfile[]>()
+
+    if (membershipsError) {
+        return (
+            <p>Had a problem grabbing the memberships with role of staff.</p>
+        )
+    }
     return (
         <div>
-            <h1>Staff List</h1>
+            <h1>Staff Accounts</h1>
 
-            <section>
-                <h2>Invite staff member to register as staff</h2>
-                {/* add a role selector button? */}
-                {/* perhaps add a timer to the url too, to make it so the url only works a limited time? */}
-                <p>By inputting the person&apos;s email below, they will receive a custom
-                    link by email to sign up as staff member for your gym.</p>
-
-                <form>
-                    <div>
-                        <label htmlFor="email">Email address</label>
-                        <input type="email" id="email" name="email" placeholder="Email address" />
+            <section className="flex">
+                {memberships.length === 0 && (
+                    <p>You do not have any accounts listed as staff yet! go to members to change the correct account to role of staff.</p>
+                )}
+                {memberships.length > 0 && memberships.map((membership: MembershipWithProfile) => (
+                    <div key={membership.id} className="flex flex-col p-2 bg-neutral-200">
+                        <p>Email: <span>{membership.profiles.email}</span></p>
+                        <Link href={`/${slug}/management/staff/${membership.id}`}>Go to profile</Link>
                     </div>
-                </form>
+                ))}
             </section>
-
-            <section>
-                <h2>Staff Directory</h2>
-                <ul>
-                    <li>Lucas, Smith, Owner, Active</li>
-                    <li>Daniel, Tyler, Manager, Active</li>
-                    <li>Vincent, Hawkins, Employee, Active</li>
-                </ul>
-                <p>Dummy data for now*</p>
-            </section>
-
         </div>
     )
 }
