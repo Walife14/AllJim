@@ -61,7 +61,7 @@ export default async function StaffAccountPage({ params }: Props) {
 
             <section>
                 <h2>List of Staff Profiles</h2>
-                <ListOfStaffProfiles id={id} />
+                <ListOfStaffProfiles staffAccountId={staffAccount.user_id} gymId={gym.id} />
             </section>
         </div>
     )

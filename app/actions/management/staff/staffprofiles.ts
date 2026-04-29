@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from "@/lib/supabase/server"
+import { revalidatePath } from "next/cache"
 import { boolean } from "zod"
 
 export type staffProfileResponse = {
@@ -32,6 +33,8 @@ export async function createStaffProfileAction(state: staffProfileResponse, form
             .insert(staffProfileToInsert)
 
         if (staffProfileCreationError) throw new Error(staffProfileCreationError.message)
+
+        revalidatePath('/management', 'layout')
 
         return {
             error: null,
