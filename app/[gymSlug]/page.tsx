@@ -44,6 +44,10 @@ export default async function GymRootPage({ params }: Props) {
         return redirect(`/${gymSlug}/management`)
     }
 
+    if (role === 'staff') {
+        return redirect(`/${gymSlug}/kiosk`)
+    }
+
     // default for regular members
 
     return redirect(`/${gymSlug}/portal`)
