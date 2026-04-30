@@ -26,11 +26,11 @@ export default async function Home({ }: Props) {
             </>
           )}
           {gyms.length > 0 && gyms.map((gym) => (
-            <>
+            <div key={gym.name}>
               <p>It seems like you're already a part of {gym.name}</p>
 
               <Link href={`/${gym.slug}/portal`}>Go to {gym.name}&apos;s portal</Link>
-            </>
+            </div>
           ))}
         </div>
 
