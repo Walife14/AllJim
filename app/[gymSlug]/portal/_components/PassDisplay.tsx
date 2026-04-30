@@ -43,13 +43,13 @@ export default function PassDisplay({ }: Props) {
                     <p>{error}</p>
                 </>
             ) : (
-                <>
+                <div className="bg-white p-8 rounded-lg">
                     <QRCodeSVG
                         value={token!}
                         size={220}
                         level="H"
                     />
-                </>
+                </div>
             )}
         </>
     )

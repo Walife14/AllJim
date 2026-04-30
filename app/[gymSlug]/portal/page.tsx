@@ -16,7 +16,7 @@ export default async function PortalPage({ params }: Props) {
         .select('name')
         .eq('slug', slug)
         .single()
-    
+
     if (gymError || !gym) {
         return (
             <>
@@ -30,7 +30,9 @@ export default async function PortalPage({ params }: Props) {
         <div>
             <h1>{gym.name}</h1>
 
-            <PassDisplay />
+            <div className="flex justify-center">
+                <PassDisplay />
+            </div>
 
             <section>
                 <h2>Your Stats</h2>
