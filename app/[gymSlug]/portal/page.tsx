@@ -1,5 +1,9 @@
 import { createClient } from "@/lib/supabase/server"
 import PassDisplay from "./_components/PassDisplay"
+import Link from "next/link"
+
+// components
+import SignOutButton from "@/app/components/auth/signOutButton"
 
 type Props = {
     params: Promise<{
@@ -29,6 +33,16 @@ export default async function PortalPage({ params }: Props) {
     return (
         <div>
             <h1>{gym.name}</h1>
+
+            {/* navigation and more */}
+            <nav>
+                <ul className="flex gap-2">
+                    <li><Link href="#">Home</Link></li>
+                    <li><Link href="#">Classes</Link></li>
+                    <li><Link href="#">Help</Link></li>
+                    <li><SignOutButton /></li>
+                </ul>
+            </nav>
 
             <div className="flex justify-center">
                 <PassDisplay />
