@@ -1,12 +1,11 @@
 import { createClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { StringFormatParams } from "zod/v4/core"
 
 type Props = {
     children: React.ReactNode
     params: Promise<{
-        gymSlug: StringFormatParams
+        gymSlug: string
     }>
 }
 
