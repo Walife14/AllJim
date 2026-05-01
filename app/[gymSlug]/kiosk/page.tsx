@@ -1,6 +1,9 @@
 
 // components
+import { cookies } from "next/headers"
 import Keypad from "./components/Keypad"
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
 type Props = {
     params: Promise<{
@@ -10,6 +13,15 @@ type Props = {
 
 export default async function KioskPage({ params }: Props) {
     const { gymSlug } = await params
+    const cookieStore = await cookies()
+
+    // check if we have a cookie set
+    const activeStaffId = cookieStore.get('active_staff_id')
+
+    if (activeStaffId) {
+        redirect(`/${gymSlug}/kiosk/terminal`)
+    }
+
 
     return (
         <div className="h-screen w-screen absolute flex justify-center items-center">
