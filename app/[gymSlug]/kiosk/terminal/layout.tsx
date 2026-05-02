@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import CheckInManager from "../components/CheckInManager"
 
 type Props = {
     children: React.ReactNode
@@ -31,13 +32,20 @@ export default async function layout({ children, params }: Props) {
         .select('id, first_name')
         .eq('id', activeStaffId)
         .single()
-    
+
     if (error || !staff) {
         // clear bad cookie in future here if messes with code
         return redirect(`/${gymSlug}/kiosk`)
     }
 
     return (
-        <>{children}</>
+        <div className="grid grid-cols-10 h-dvh">
+            <div className="col-span-7 overflow-y-auto p-2">
+                {children}
+            </div>
+            <div className="col-span-3 bg-neutral-100 p-2 overflow-auto">
+                <CheckInManager />
+            </div>
+        </div>
     )
 }
