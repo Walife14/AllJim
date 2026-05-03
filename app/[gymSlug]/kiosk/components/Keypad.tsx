@@ -1,6 +1,6 @@
 'use client'
 
-import { staffProfileLoginAction, staffProfileLoginResponse } from "@/app/components/kiosk/staffProfileLogin"
+import { staffProfileLoginAction, staffProfileLoginResponse } from "@/app/actions/kiosk/staffProfileLogin"
 import { startTransition, useActionState, useEffect, useState } from "react"
 
 type Props = {

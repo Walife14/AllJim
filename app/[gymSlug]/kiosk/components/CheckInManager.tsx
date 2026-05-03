@@ -82,7 +82,7 @@ const dummyUsers = [
     },
     {
         name: 'Kian Daniels',
-        status: 'Active',
+        status: 'active',
         id: '126'
     },
 ]
@@ -93,8 +93,8 @@ export default function CheckInManager({ }: Props) {
             <h2 className="text-center">Check In Feed</h2>
 
             <div className="flex flex-col gap-y-2">
-            {dummyUsers.map((user: any) => (
-                <CheckInCard name={user.name} status={user.status} id={user.id} />
+            {dummyUsers.map((user: any, index: number) => (
+                <CheckInCard name={user.name} status={user.status} id={user.id} key={index} />
             ))}
             </div>
         </div>
