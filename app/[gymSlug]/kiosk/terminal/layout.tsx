@@ -50,7 +50,7 @@ export default async function layout({ children, params }: Props) {
                 </div>
             </div>
             <div className="col-span-3 bg-neutral-100 p-2 overflow-auto">
-                <CheckInManager />
+                <CheckInManager gymSlug={gymSlug} />
             </div>
         </div>
     )
