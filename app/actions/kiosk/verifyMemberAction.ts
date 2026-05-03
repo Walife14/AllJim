@@ -5,7 +5,19 @@ import { isAfter, parseISO } from "date-fns"
 import { jwtVerify } from "jose"
 
 interface User {
-    user_id: string
+    membership_id: string
+    first_name: string
+    last_name: string
+}
+
+type MembershipWithProfile = {
+    id: string
+    expires_at: string
+    status: string
+    profiles: {
+        first_name: string
+        last_name: string
+    }
 }
 
 export type checkInMemberResponse = {
@@ -44,9 +56,10 @@ export async function verifyMember(state: checkInMemberResponse, formData: FormD
         // check with backend the user_id from payload which is the payload.sub
         const { data: membership, error: membershipError } = await supabase
             .from('memberships')
-            .select('expires_at, status')
+            .select(`id, expires_at, status, profiles!inner (first_name, last_name)`)
             .match({ user_id: payload.sub, gym_id: gym.id })
             .single()
+            .overrideTypes<MembershipWithProfile>()
 
         if (membershipError) throw new Error(membershipError.message)
 
@@ -59,7 +72,25 @@ export async function verifyMember(state: checkInMemberResponse, formData: FormD
 
         if (!isActive) throw new Error('Membership is expired.')
 
-        return { success: true, data: { user_id: payload.sub! } }
+        // the membership is still active lets make a check-in record for the user
+
+        const checkIn = {
+            membership_id: membership.id,
+            gym_id: gym.id
+        }
+
+        const { data: checkInData, error: checkInError } = await supabase
+            .from('check_ins')
+            .insert(checkIn)
+
+        return {
+            success: true,
+            data: {
+                membership_id: membership.id,
+                first_name: membership.profiles.first_name,
+                last_name: membership.profiles.last_name
+            }
+        }
     } catch (err: any) {
         console.error('JWT VERIFICATION FAILED: ', err)
         return {

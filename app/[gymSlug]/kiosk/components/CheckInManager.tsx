@@ -144,7 +144,7 @@ export default function CheckInManager({ gymSlug }: Props) {
                     <input type="text" name="jwt" id="jwt" placeholder="JWT" />
                 </div>
                 {state.error && <p>{state.error}</p>}
-                {state.data && <p>{state.data.user_id}</p>}
+                {state.data && <p>{state.data.first_name}, {state.data.last_name} has checked in.</p>}
             </form>
 
             <div className="flex flex-col gap-y-2">
