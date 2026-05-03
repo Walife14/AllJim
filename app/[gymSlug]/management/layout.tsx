@@ -41,7 +41,7 @@ export default async function ManagementLayout({ children, params }: Props) {
     }
 
     if (membership.role === 'member') {
-        return redirect(`/${slug}/member/portal`)
+        return redirect(`/${slug}/portal`)
     }
 
     return (
