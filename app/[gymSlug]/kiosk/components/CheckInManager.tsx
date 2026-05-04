@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useEffect, useRef } from "react"
+import { useActionState, useEffect, useRef, useState } from "react"
 
 // components
 import CheckInCard from "./CheckInCard"
@@ -10,88 +10,12 @@ type Props = {
     gymSlug: string
 }
 
-const dummyUsers = [
-    {
-        name: 'Lucas Smith',
-        status: 'active',
-        id: '123'
-    },
-    {
-        name: 'Eve Doe',
-        status: 'inactive',
-        id: '124'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Jack Smith',
-        status: 'active',
-        id: '125'
-    },
-    {
-        name: 'Kian Daniels',
-        status: 'active',
-        id: '126'
-    },
-]
+interface checkedInMember {
+    id: string
+    name: string
+    status: string
+    created_at: string
+}
 
 export default function CheckInManager({ gymSlug }: Props) {
     // const buffer = useRef('')
@@ -130,8 +54,23 @@ export default function CheckInManager({ gymSlug }: Props) {
     //         window.removeEventListener('keydown', handleKeyDown)
     //     }
     // }, [])
-
+    const [checkIns, setCheckIns] = useState<checkedInMember[]>([])
     const [state, formAction, isPending] = useActionState(verifyMember, {})
+
+    useEffect(() => {
+
+        // if we get a state of success then we add a new CheckInCard to the UI to display check-In
+        if (state.success && state.data) {
+            const newCheckIn = {
+                id: state.data.membership_id,
+                name: `${state.data.first_name} ${state.data.last_name}`,
+                status: state.data.status,
+                created_at: state.data.created_at
+            }
+            setCheckIns(prev => [newCheckIn, ...prev])
+        }
+
+    }, [state])
 
     return (
         <div>
@@ -148,9 +87,9 @@ export default function CheckInManager({ gymSlug }: Props) {
             </form>
 
             <div className="flex flex-col gap-y-2">
-                {/* {dummyUsers.map((user: any, index: number) => (
-                    <CheckInCard name={user.name} status={user.status} id={user.id} key={index} />
-                ))} */}
+                {checkIns.map((user: checkedInMember, index: number) => (
+                    <CheckInCard name={user.name} status={user.status} id={user.id} created_at={user.created_at} key={index} />
+                ))}
             </div>
         </div>
     )

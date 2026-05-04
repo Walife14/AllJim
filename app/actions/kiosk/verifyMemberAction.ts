@@ -8,6 +8,8 @@ interface User {
     membership_id: string
     first_name: string
     last_name: string
+    status: string
+    created_at: string
 }
 
 type MembershipWithProfile = {
@@ -82,13 +84,19 @@ export async function verifyMember(state: checkInMemberResponse, formData: FormD
         const { data: checkInData, error: checkInError } = await supabase
             .from('check_ins')
             .insert(checkIn)
+            .select('created_at')
+            .single()
+        
+        if (!checkInData || checkInError ) throw new Error(checkInError.message || 'Could not insert or grab check in.')
 
         return {
             success: true,
             data: {
                 membership_id: membership.id,
                 first_name: membership.profiles.first_name,
-                last_name: membership.profiles.last_name
+                last_name: membership.profiles.last_name,
+                status: membership.status,
+                created_at: checkInData.created_at
             }
         }
     } catch (err: any) {
