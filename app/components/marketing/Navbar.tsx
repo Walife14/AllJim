@@ -2,6 +2,7 @@
 import { UserData } from "@/app/actions/auth/get-user"
 import Link from "next/link"
 import SignOutButton from "../auth/signOutButton"
+import Image from "next/image"
 
 
 type Props = {
@@ -10,26 +11,33 @@ type Props = {
 
 export default async function Navbar({ user }: Props) {
     return (
-        <nav>
-            <div className="w-full py-4 px-4 md:px-8 lg:px-16 xl:px-24 flex justify-between items-center">
-                <Link href="/">AllJim</Link>
+        <header className="fixed z-50 w-5xl mt-4 left-1/2 -translate-x-1/2">
+            <nav className="w-full p-2 md:px-8 flex justify-between items-center bg-zinc-900/70 backdrop-blur-lg text-zinc-50 rounded-lg shadow-sm">
+                <Link href="/">
+                    <Image
+                        src="/assets/brand/logo.svg"
+                        alt="AllJim Logo"
+                        height={0}
+                        width={0}
+                        className="h-6 w-auto"
+                        priority
+                    />
+                </Link>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 uppercase">
                     {user && (
                         <>
-                            <p>Hello, {user.first_name}!</p>
-                            <Link href="#">My account</Link>
-                            <SignOutButton />
+                            <SignOutButton mode="light" />
                         </>
                     )}
                     {!user && (
                         <>
-                            <Link href="/login">Login</Link>
-                            <Link href="/signup">Sign up</Link>
+                            <Link href="/login" className="hover:text-zinc-200 active:scale-95 transition-all duration-100">Sign In</Link>
+                            <Link href="/signup" className="text-zinc-900 bg-zinc-50 py-2 px-4 rounded-lg hover:bg-zinc-200 active:scale-95 transition-all duration-100">Join Us</Link>
                         </>
                     )}
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
     )
 }

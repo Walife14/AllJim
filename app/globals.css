@@ -8,12 +8,21 @@
   --body-foreground: #27272a;
 }
 
+@layer base {
+  body {
+    color: var(--color-zinc-900);
+    background-color: var(--color-zinc-50);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-
 
 }
 
@@ -56,12 +65,8 @@ h4 {
   @apply text-lg;
 }
 
-a {
+a.link {
   @apply underline underline-offset-4 decoration-gray-300 transition-colors hover:decoration-current;
-}
-
-* {
-  @apply border-gray-100 dark:border-zinc-800;
 }
 
 form {
@@ -78,8 +83,4 @@ form div input {
 
 form div input:focus {
   @apply bg-white outline-green-500;
-}
-
-form button {
-  @apply py-2 px-8 rounded-lg block mx-auto cursor-pointer bg-green-500 text-gray-50;
 }

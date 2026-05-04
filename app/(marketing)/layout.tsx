@@ -13,7 +13,9 @@ export default async function MarketingLayout({ children }: Props) {
     return (
         <>
             <Navbar user={user} />
-            {children}
+            <main>
+                {children}
+            </main>
         </>
     )
 }

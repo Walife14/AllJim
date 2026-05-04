@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getUserProfileAction } from '../actions/auth/get-user'
 import { getCurrentUserGymAction } from '../actions/auth/get-user-gym'
+import Image from 'next/image'
 
 type Props = {}
 
@@ -12,6 +13,22 @@ export default async function Home({ }: Props) {
   return (
     <div>
       <section>
+        <div className='relative max-h-[70vh] overflow-hidden'>
+          <Image
+            src="/assets/marketing/receptionist.png"
+            alt="Gym Receptionist"
+            width={0}
+            height={0}
+            sizes="100vw"
+            loading="eager"
+            style={{ width: '100%', height: 'auto' }}
+            className='sticky'
+          />
+        </div>
+
+      </section>
+
+      {/* <section>
         <div className='flex flex-col items-center'>
           <h1>Welcome to AllJim</h1>
           {user && (
@@ -34,7 +51,7 @@ export default async function Home({ }: Props) {
           ))}
         </div>
 
-      </section>
+      </section> */}
 
     </div>
   )
