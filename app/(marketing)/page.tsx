@@ -22,10 +22,23 @@ export default async function Home({ }: Props) {
             sizes="100vw"
             loading="eager"
             style={{ width: '100%', height: 'auto' }}
-            className='sticky'
+            className="object-center"
           />
         </div>
+      </section>
 
+      <section className='max-w-5xl mx-auto my-8'>
+        <h1 className='text-center'>AllJim: Gym Management, Simplified.</h1>
+        <p className='text-center text-2xl'>
+          Focus on your athletes, not your paperwork.
+          Effortlessly manage memberships, track finances,
+          and run your front desk with our dedicated staff kiosk and admin panel.
+        </p>
+        {/* links */}
+        <div className='flex justify-center items-center gap-4 mt-4'>
+          <Link href="#" className='link-secondary'>Discover Our Features</Link>
+          <Link href="#" className='link-primary'>Get Started Today</Link>
+        </div>
       </section>
 
       {/* <section>
