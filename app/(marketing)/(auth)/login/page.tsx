@@ -44,7 +44,7 @@ export default function Login({ }: Props) {
         </form>
 
         <div className="py-2 flex flex-col gap-y-2">
-          <Link className="link" href="/forgot-password">Forgot password</Link>
+          <Link className="link" href="/forgot-password">Forgot password?</Link>
           <p>Don&apos;t have an account? <Link className="link" href="/signup">Click here to sign up.</Link></p>
         </div>
       </div>
