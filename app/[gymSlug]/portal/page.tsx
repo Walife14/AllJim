@@ -40,7 +40,7 @@ export default async function PortalPage({ params }: Props) {
                     <li><Link href="#">Home</Link></li>
                     <li><Link href="#">Classes</Link></li>
                     <li><Link href="#">Help</Link></li>
-                    <li><SignOutButton /></li>
+                    <li><SignOutButton mode="light" /></li>
                 </ul>
             </nav>
 
