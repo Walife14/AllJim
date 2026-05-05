@@ -25,11 +25,19 @@
   }
 
   .link-primary {
-    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg
+    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg transition duration-100
   }
-
+  .link-primary:hover {
+    @apply bg-zinc-50 text-zinc-900 ring ring-inset ring-zinc-900
+  }
   .link-secondary {
     @apply ring ring-inset ring-zinc-900 px-4 py-2 rounded-lg
+  }
+  .link-secondary:hover {
+    @apply ring-0 bg-zinc-900 text-zinc-50
+  }
+    .link-primary:active, .link-secondary:active {
+    @apply scale-95
   }
 }
 
