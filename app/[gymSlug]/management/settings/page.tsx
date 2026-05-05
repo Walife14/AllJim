@@ -10,7 +10,7 @@ export default function Settings({ }: Props) {
       <div className="flex flex-col items-start">
         <p>To log out of your account, click the button below:</p>
 
-        <SignOutButton />
+        <SignOutButton mode="light" />
       </div>
 
     </div>
