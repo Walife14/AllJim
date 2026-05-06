@@ -7,10 +7,11 @@ An All-in-one streamlined gym management platform desgined to unify member onboa
 
 ## Tech Stack
 
-* **Next.js**
-* **Supabase**
-* **Tailwind CSS**
-* **Vitest**
+* **[Next.js](https://nextjs.org)** – Full-stack React framework
+* **[Supabase](https://supabase.com)** – Database and authentication
+* **[Tailwind CSS](https://tailwindcss.com)** – Styling
+* **[Vitest](https://vitest.dev)** – Unit testing
+* **[Lucide](https://lucide.dev)** – Icon library
 
 ## Quick Links
 [Live Demo](https://www.vercel.com/)

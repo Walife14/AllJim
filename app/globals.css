@@ -9,6 +9,9 @@
 }
 
 @layer base {
+  html {
+    @apply scroll-smooth;
+  }
   body {
     color: var(--color-zinc-900);
     background-color: var(--color-zinc-50);
@@ -44,26 +47,6 @@
     @apply text-lg;
   }
 
-  form {
-    @apply flex flex-col gap-y-4;
-  }
-
-  form div {
-    @apply flex flex-col;
-  }
-
-  form div input {
-    @apply border border-gray-300 p-2 bg-gray-50 rounded-lg;
-  }
-
-  form div input:focus {
-    @apply bg-white outline-green-500;
-  }
-
-  form button {
-    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg mx-auto min-w-1/2;
-  }
-
 }
 
 @layer components {
@@ -72,7 +55,7 @@
   }
 
   .link-primary {
-    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg transition duration-100
+    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg transition duration-100 text-center;
   }
   .link-primary:hover {
     @apply bg-zinc-50 text-zinc-900 ring ring-inset ring-zinc-900
@@ -85,6 +68,32 @@
   }
     .link-primary:active, .link-secondary:active {
     @apply scale-95
+  }
+
+  .feature-card {
+    @apply bg-white shadow-xl p-4 transition-transform duration-100;
+  }
+  .feature-card:hover {
+    @apply -translate-y-1;
+  }
+  .feature-card p {
+    @apply text-sm;
+  }
+
+  .form-basic {
+    @apply flex flex-col gap-y-4;
+  }
+  .form-basic div {
+    @apply flex flex-col;
+  }
+  .form-basic div input {
+    @apply border border-gray-300 p-2 bg-gray-50 rounded-lg;
+  }
+  .form-form div input:focus {
+    @apply bg-white outline-green-500;
+  }
+  .form-basic button {
+    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg mx-auto min-w-1/2;
   }
 }
 

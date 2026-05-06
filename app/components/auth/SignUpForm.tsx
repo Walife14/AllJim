@@ -14,7 +14,7 @@ export default function SignUpForm({ gymSlug }: Props) {
   const [state, formAction, pending] = useActionState(signup, initialState)
 
     return (
-        <form action={formAction}>
+        <form action={formAction} className="form-basic">
             {gymSlug && (
                 <input type="hidden" name="gymSlug" value={gymSlug} />
             )}

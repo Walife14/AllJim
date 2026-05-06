@@ -28,7 +28,7 @@ export default function Login({ }: Props) {
       <div>
         <h1 className="text-center">Sign In</h1>
 
-        <form action={action}>
+        <form action={action} className="form-basic">
           <div>
             <label htmlFor="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Email address" />
