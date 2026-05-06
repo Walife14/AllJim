@@ -54,44 +54,35 @@ export default async function Home({ }: Props) {
 
       <div className='max-w-5xl mx-auto flex flex-col gap-y-8'>
 
-        <section className='my-8'>
-          <h1 className='text-center'>AllJim: Gym Management, Simplified.</h1>
-          <p className='text-center text-2xl'>
-            Focus on your athletes, not your paperwork.
-            Effortlessly manage memberships, track finances,
-            and run your front desk with our dedicated staff kiosk and admin panel.
-          </p>
-          {/* links */}
-          <div className='flex justify-center items-center gap-4 mt-4'>
-            <Link href="/#features" className='link-secondary'>Discover Our Features</Link>
-            <Link href="/signup" className='link-primary'>Get Started Today</Link>
-          </div>
-        </section>
+        {user && (
+          <section className='mt-10'>
+            <h1 className='text-center'>Your Gyms</h1>
+            <p className='text-center'>Welcome back {user.first_name}.</p>
+            <ul className='flex justify-center gap-x-8 my-10'>
+              {gyms && gyms.map((gym: any, index: number) => (
+                <li key={index}>
+                  <Link className='link' href={`/${gym.slug}`}>Continue to {gym.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {/* <section>
-        <div className='flex flex-col items-center'>
-          <h1>Welcome to AllJim</h1>
-          {user && (
-            <p>{user.first_name}</p>
-          )}
-          {gyms.length === 0 && (
-            <>
-              <p>Your all-in-one gym management platform.</p>
-              
-              <p>It doesn&apos;t seem like you are part of a gym yet.</p>
-              <Link href="/onboarding">Manage my gym using AllJim</Link>
-            </>
-          )}
-          {gyms.length > 0 && gyms.map((gym) => (
-            <div key={gym.name}>
-              <p>It seems like you're already a part of {gym.name}</p>
-
-              <Link href={`/${gym.slug}/portal`}>Go to {gym.name}&apos;s portal</Link>
+        {!user && (
+          <section className='mt-8'>
+            <h1 className='text-center'>AllJim: Gym Management, Simplified.</h1>
+            <p className='text-center text-2xl'>
+              Focus on your athletes, not your paperwork.
+              Effortlessly manage memberships, track finances,
+              and run your front desk with our dedicated staff kiosk and admin panel.
+            </p>
+            {/* links */}
+            <div className='flex justify-center items-center gap-4 mt-4'>
+              <Link href="/#features" className='link-secondary'>Discover Our Features</Link>
+              <Link href="/signup" className='link-primary'>Get Started Today</Link>
             </div>
-          ))}
-        </div>
-
-        </section> */}
+          </section>
+        )}
 
         {/* features */}
         <section id="features">
@@ -134,95 +125,98 @@ export default async function Home({ }: Props) {
         </section>
 
         {/* pricing */}
-        <section>
-          <h2 className='text-center'>Pricing</h2>
-          <p className='mb-8 text-center'>
-            From boutique startups to global franchises, choose the plan built to scale with your ambition.
-          </p>
+        {!user && (
+          <section>
 
-          <div className='grid grid-cols-3'>
+            <h2 className='text-center'>Pricing</h2>
+            <p className='mb-8 text-center'>
+              From boutique startups to global franchises, choose the plan built to scale with your ambition.
+            </p>
 
-            {/* Launch Plan */}
-            <div className='p-8 border-l border-t rounded-t-lg flex flex-col gap-y-2'>
-              <h3>Launch</h3>
-              <p>Perfect for boutique gyms and new startups.</p>
-              <div>
-                <strong className='text-4xl'>&pound;49</strong> <span className='text-sm'>/month</span>
+            <div className='grid grid-cols-3'>
+
+              {/* Launch Plan */}
+              <div className='p-8 border-l border-t rounded-t-lg flex flex-col gap-y-2'>
+                <h3>Launch</h3>
+                <p>Perfect for boutique gyms and new startups.</p>
+                <div>
+                  <strong className='text-4xl'>&pound;49</strong> <span className='text-sm'>/month</span>
+                </div>
+                <Link href="/signup?plan=launch" className='link-primary'>Get started</Link>
+                <ul className='flex flex-col gap-y-2'>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Up to 200 members</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Core Management Panel</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Digital Member Portal</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Dedicated Kiosk</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Attendance Tracking</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Class Scheduling & Booking</p>
+                  </li>
+                </ul>
               </div>
-              <Link href="/signup?plan=launch" className='link-primary'>Get started</Link>
-              <ul className='flex flex-col gap-y-2'>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Up to 200 members</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Core Management Panel</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Digital Member Portal</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Dedicated Kiosk</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Attendance Tracking</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Class Scheduling & Booking</p>
-                </li>
-              </ul>
+
+              {/* Scale Plan */}
+              <div className='p-8 border-x border-t rounded-t-lg bg-zinc-200 scale-105 flex flex-col gap-y-2'>
+                <div className='flex items-start gap-x-2'>
+                  <h3>Scale</h3>
+                  <span className='text-xs bg-zinc-900 px-2 py-1 rounded-md text-zinc-50'>RECOMMENDED</span>
+                </div>
+                <p>For established gyms ready to automate operations.</p>
+                <div>
+                  <strong className='text-4xl'>&pound;79</strong> <span className='text-sm'>/month</span>
+                </div>
+                <Link href="/signup?plan=scale" className='link-primary'>Get started</Link>
+                <ul className='flex flex-col gap-y-2'>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Everything in Launch</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Unlimited Members</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Unlimited Staff Accounts</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Broadcast Announcements</p>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Franchise Plan */}
+              <div className='p-8 border-r border-t rounded-t-lg flex flex-col gap-y-2'>
+                <h3>Franchise</h3>
+                <p>Enterprise solutions for multi-location networks.</p>
+                <span className="text-4xl font-bold">Custom</span>
+                <Link href="/signup?plan=franchise" className='link-primary'>Get started</Link>
+                <ul className='flex flex-col gap-y-2'>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Everything in Scale</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Multi-location Dashboard</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>Advanced Financial Reporting</p>
+                  </li>
+                  <li className='flex gap-x-1'>
+                    <Check /><p>24&#47;7 Priority Support</p>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            {/* Scale Plan */}
-            <div className='p-8 border-x border-t rounded-t-lg bg-zinc-200 scale-105 flex flex-col gap-y-2'>
-              <div className='flex items-start gap-x-2'>
-                <h3>Scale</h3>
-                <span className='text-xs bg-zinc-900 px-2 py-1 rounded-md text-zinc-50'>RECOMMENDED</span>
-              </div>
-              <p>For established gyms ready to automate operations.</p>
-              <div>
-                <strong className='text-4xl'>&pound;79</strong> <span className='text-sm'>/month</span>
-              </div>
-              <Link href="/signup?plan=scale" className='link-primary'>Get started</Link>
-              <ul className='flex flex-col gap-y-2'>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Everything in Launch</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Unlimited Members</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Unlimited Staff Accounts</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Broadcast Announcements</p>
-                </li>
-              </ul>
-            </div>
-
-            {/* Franchise Plan */}
-            <div className='p-8 border-r border-t rounded-t-lg flex flex-col gap-y-2'>
-              <h3>Franchise</h3>
-              <p>Enterprise solutions for multi-location networks.</p>
-              <span className="text-4xl font-bold">Custom</span>
-              <Link href="/signup?plan=franchise" className='link-primary'>Get started</Link>
-              <ul className='flex flex-col gap-y-2'>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Everything in Scale</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Multi-location Dashboard</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>Advanced Financial Reporting</p>
-                </li>
-                <li className='flex gap-x-1'>
-                  <Check /><p>24&#47;7 Priority Support</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-        </section>
+          </section>
+        )}
 
         {/* newsletter */}
         <section className='flex flex-col gap-y-4 my-20'>
