@@ -30,8 +30,6 @@ const demoData = [
 ]
 
 export default function ListUsers({ users, gymSlug }: Props) {
-    console.log(users)
-
     return (
         <div className="bg-zinc-200 p-4 rounded-lg">
             {users ? (
@@ -47,7 +45,7 @@ export default function ListUsers({ users, gymSlug }: Props) {
                     </div>
                     <ul className="flex flex-col gap-y-2">
                         {users.map((user: any) => (
-                            <li key={user.id} className="flex items-center even:bg-zinc-50 px-4 py-2 rounded-lg overflow-hidden gap-x-1">
+                            <li key={user.profiles.id} className="flex items-center even:bg-zinc-50 px-4 py-2 rounded-lg overflow-hidden gap-x-1">
                                 <span className="flex-1 overflow-hidden text-nowrap truncate">{user.profiles.id}</span>
                                 <span className="flex-1 capitalize">{user.profiles.first_name}</span>
                                 <span className="flex-1 capitalize">{user.profiles.last_name}</span>

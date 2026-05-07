@@ -47,7 +47,7 @@ export default function ManagementNavbar({ gymSlug }: Props) {
                                 </div>
 
                                 {/* LABEL: Hidden until hover */}
-                                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap font-semibold ml-2">
+                                <span className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap font-semibold ml-2">
                                     {item.label}
                                 </span>
                             </Link>
