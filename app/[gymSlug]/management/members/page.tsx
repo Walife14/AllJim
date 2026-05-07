@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server"
-import Link from "next/link"
 
 // components
 import MembersFilter from "@/app/components/management/MembersFilter"
@@ -80,11 +79,15 @@ export default async function MembersPage({ params, searchParams }: Props) {
 
     return (
         <>
-            <h1>Members</h1>
-            <p>This page shows a list of all the members currently attending your gym and their details.</p>
-
-            <MembersFilter />
-
+            <div className="bg-zinc-200 rounded-lg p-4 my-4">
+                <div>
+                    <h1>Members</h1>
+                    <p>This page shows a list of all the members currently attending your gym and their details.</p>
+                </div>
+                <div>
+                    <MembersFilter />
+                </div>
+            </div>
             <ListUsers users={members} gymSlug={slug} />
         </>
     )

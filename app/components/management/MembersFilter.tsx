@@ -33,32 +33,52 @@ export default function MembersFilter({ }: Props) {
 
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="border p-2 rounded-lg">
+            <span className="text-medium font-semibold">Filters</span>
+            <form className="flex items-center gap-x-4" onSubmit={handleSubmit}>
 
-            {/* search query input */}
-            <div>
-                <input
-                    type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    aria-label="Search"
-                    placeholder="Search..."
-                />
-            </div>
+                {/* search query input */}
+                <div className="flex-1">
+                    <input
+                        className="bg-zinc-50 px-4 py-2 rounded-lg w-full"
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        aria-label="Search"
+                        placeholder="Search..."
+                    />
+                </div>
 
-            {/* status selector */}
-            <div>
-                {VALID_STATUSES.map((s) => (
-                    <label key={s} className="capitalize">
-                        <input type="radio" name="status" value={s} checked={status === s} onChange={(e) => setStatus(e.target.value)} />
-                        {s}
-                    </label>
-                ))}
-            </div>
+                {/* status selector */}
+                <div className="bg-zinc-200 p-1 rounded-xl flex gap-x-2 w-fit">
+                    {VALID_STATUSES.map((s) => (
+                        <label key={s} className="relative cursor-pointer">
+                            {/* The hidden input with the 'peer' class */}
+                            <input
+                                type="radio"
+                                name="status"
+                                value={s}
+                                checked={status === s}
+                                onChange={(e) => setStatus(e.target.value)}
+                                className="peer sr-only"
+                            />
 
-            {/* submit */}
-            <button type="submit">Apply Filters</button>
+                            {/* The visible 'button' styled via peer-checked */}
+                            <div className={`
+                                px-4 py-2 rounded-lg capitalize transition-all duration-200 border border-zinc-300
+                                bg-zinc-50 text-zinc-900 
+                                peer-checked:bg-zinc-900 peer-checked:text-zinc-50 peer-checked:border-zinc-900
+                                hover:bg-zinc-100 peer-checked:hover:bg-zinc-800
+                            `}>
+                                {s}
+                            </div>
+                        </label>
+                    ))}
+                </div>
+                {/* submit */}
+                <button className="ml-auto link-primary" type="submit">Apply Filters</button>
 
-        </form>
+            </form>
+        </div>
     )
 }

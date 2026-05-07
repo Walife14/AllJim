@@ -20,15 +20,6 @@ type Props = {
     gymSlug: string
 }
 
-const demoData = [
-    { id: '1', first_name: 'Lucas', last_name: 'Smith', email: 'lferon14@gmail.com', phone: '07939478330', role: 'member' },
-    { id: '2', first_name: 'John', last_name: 'Smith', email: 'lferon14@gmail.com', phone: '07939478330', role: 'member' },
-    { id: '3', first_name: 'Michael', last_name: 'Smith', email: 'lferon14@gmail.com', phone: '07939478330', role: 'member' },
-    { id: '4', first_name: 'Kian', last_name: 'Smith', email: 'lferon14@gmail.com', phone: '07939478330', role: 'member' },
-    { id: '5', first_name: 'Alfie', last_name: 'Smith', email: 'lferon14@gmail.com', phone: '07939478330', role: 'member' },
-    { id: '6', first_name: 'Julie', last_name: 'Smith', email: 'lferon14@gmail.com', phone: '07939478330', role: 'member' }
-]
-
 export default function ListUsers({ users, gymSlug }: Props) {
     return (
         <div className="bg-zinc-200 p-4 rounded-lg">
