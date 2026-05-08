@@ -11,7 +11,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     const supabase = await createClient()
 
     // grab the gymSlug if exists for redirect
-    const gymSlug = formData.get('gymSlug')
+    const gymSlug = formData.get('gymSlug')?.toString()
 
     // validate form fields
     const validatedFields = LoginFormSchema.safeParse({
@@ -38,14 +38,20 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     }
 
     if (gymSlug) {
-        const adminRoles = ['owner']
-        const membership = await checkGymMembership(user.id, gymSlug.toString())
+        const membership = await checkGymMembership(user.id, gymSlug)
 
         if (membership) {
-            if (adminRoles.includes(membership.role)) { // send to management if they're management
-                redirect(`/${gymSlug}/management`)
+            // if an owner send to management panel
+            if (membership.role === 'owner') { // send to management if they're management
+                return redirect(`/${gymSlug}/management`)
             }
 
+            // if staff role send to kiosk
+            if (membership.role === 'staff') {
+                return redirect(`/${gymSlug}/kiosk`)
+            }
+
+            // if has role and is not owner or staff has to be member
             redirect(`/${gymSlug}/portal`)
         } else {
             redirect(`/${gymSlug}/join?reason=unregistered`)
