@@ -1,19 +1,20 @@
 
 // components
 import AttendanceStats from "@/app/components/management/AttendanceStats"
-import StaffOverview from "@/app/components/management/StaffOverview"
+import CheckInAnalytics from "./components/CheckInAnalytics"
 
 type Props = {}
 
 export default function ManagementPage({ }: Props) {
     return (
-        <>
-            <h1>Dashboard</h1>
-
-            <div className="flex gap-4">
-                <AttendanceStats daily={50} weekly={200} monthly={850} />
-                <StaffOverview />
+        <div className="flex flex-col gap-y-2">
+            <div className="bg-zinc-200 rounded-lg p-4">
+                <h1>Dashboard</h1>
             </div>
-        </>
+            <div className="flex items-start gap-2 flex-wrap">
+
+                <CheckInAnalytics />
+            </div>
+        </div>
     )
 }
