@@ -16,8 +16,8 @@ export default async function KioskNav({ gymSlug }: Props) {
     }
 
     return (
-        <nav className="bg-neutral-200 rounded-lg p-2">
-            <ul className="flex flex-col gap-2">
+        <nav className="bg-zinc-200 rounded-lg p-4">
+            <ul className="flex flex-col gap-y-4 font-semibold">
                 <li>
                     <Link href={`/${gymSlug}/kiosk/terminal`}>Home</Link>
                 </li>

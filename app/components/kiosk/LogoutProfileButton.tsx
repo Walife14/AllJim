@@ -4,12 +4,13 @@ import { logoutProfileAction } from "@/app/actions/kiosk/logoutProfileAction"
 
 type Props = {}
 
-export default function LogoutProfileButton({}: Props) {
+export default function LogoutProfileButton({ }: Props) {
   return (
     <button
-        onClick={() => logoutProfileAction()}
+      className="cursor-pointer"
+      onClick={() => logoutProfileAction()}
     >
-        Logout
+      Logout
     </button>
   )
 }
