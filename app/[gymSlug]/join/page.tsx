@@ -36,7 +36,7 @@ export default async function JoinPage({ params }: Props) {
     // grab the gym id
     const { data: gym, error: gymError } = await supabase
       .from('gyms')
-      .select('id')
+      .select('id, name')
       .eq('slug', gymSlug)
       .single()
 
@@ -58,20 +58,19 @@ export default async function JoinPage({ params }: Props) {
     }
 
     return (
-      <div>
-        <h2>Join</h2>
+      <main>
+        <h1>Join</h1>
         <p>Hello {profile.first_name} this button will allow you to join their gym!</p>
         <JoinGym gymId={gym.id} gymSlug={gymSlug} />
-      </div>
+      </main>
     )
   }
 
   return (
-    <div>
-      <h2>Join</h2>
-      <p>Already have an account? <Link href={`/${gymSlug}/login`}>go to login</Link></p>
-
+    <main className="px-2 flex flex-col gap-y-4 my-12">
+      <h1 className="text-center">Join</h1>
       <SignUpForm gymSlug={gymSlug} />
-    </div>
+      <p>Already have an account? <Link href={`/${gymSlug}/login`}>go to login</Link></p>
+    </main>
   )
 }
