@@ -15,7 +15,7 @@ export default function LoginForm({ gymSlug }: Props) {
 
 
     return (
-        <form action={action}>
+        <form className='form-basic' action={action}>
             <input type="hidden" name="gymSlug" value={gymSlug} />
 
             <div>

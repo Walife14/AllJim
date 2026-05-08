@@ -25,20 +25,20 @@ export default async function layout({ children, params }: Props) {
     }
 
     return (
-        <div>
-            <header>
+        <div className="flex flex-col min-h-dvh">
+            <header className="my-12 flex justify-center">
                 {/* gym logo? */}
 
                 {/* gym name */}
-                <h1>{gym.name}</h1>
+                <span className="bg-zinc-900 text-zinc-50 text-2xl font-semibold p-4">{gym.name}</span>
 
                 {/* gym slogan? */}
 
             </header>
-            <main>
+            <main className="px-2">
                 {children}
             </main>
-            <footer>Powered by AllJim</footer>
+            <footer className="mt-auto mx-auto p-2">Powered by AllJim</footer>
         </div>
     )
 }

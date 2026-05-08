@@ -13,8 +13,8 @@ export default async function LoginPage({ params }: Props) {
     const { gymSlug: slug } = await params
 
     return (
-        <div>
-            <h2>Login</h2>
+        <div className="flex flex-col gap-y-4">
+            <h1 className="text-center">Login</h1>
             
             <LoginForm gymSlug={slug} />
             
