@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
+import PortalNavbar from "./_components/PortalNavbar"
 
 type Props = {
     children: React.ReactNode
@@ -22,7 +23,7 @@ export default async function layout({ children, params }: Props) {
     
     // grab the gym id
     const { data: gym } = await supabase
-        .from('gyms').select('id').eq('slug', slug).single()
+        .from('gyms').select('id, name').eq('slug', slug).single()
     
     // if no gym redirect away from this page
     if (!gym) {
@@ -43,8 +44,10 @@ export default async function layout({ children, params }: Props) {
 
     return (
         <>
-            {/* TODO: navbar */}
-            <main>
+            <header>
+                <PortalNavbar gymSlug={slug} gymName={gym.name} />
+            </header>
+            <main className="mx-2">
                 {children}
             </main>
         </>
