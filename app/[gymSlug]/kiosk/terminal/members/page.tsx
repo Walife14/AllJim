@@ -1,3 +1,4 @@
+import ListUsers from "@/app/[gymSlug]/components/ListUsers"
 import { createClient } from "@/lib/supabase/server"
 
 type Props = {
@@ -26,8 +27,8 @@ export default async function MembersPage({ params }: Props) {
     const { data: membersData, error: membersError } = await supabase
         .from('memberships')
         .select(`
-            user_id, role, status, expires_at, joined_at,
-            profiles!inner (first_name, last_name, email, phone)
+            role, status, expires_at, joined_at,
+            profiles!inner (id, first_name, last_name, email, phone)
             `)
         .match({ gym_id: gymData.id, role: 'member' })
 
@@ -41,20 +42,7 @@ export default async function MembersPage({ params }: Props) {
         <>
             <h1>Members List</h1>
 
-            <ul>
-                {membersData.map((member: any, index) => (
-                    <li key={index}>
-                        {member.profiles.first_name},
-                        {member.profiles.last_name},
-                        {member.profiles.email},
-                        {member.profiles.phone},
-                        {member.role},
-                        {member.status},
-                        {member.expires_at},
-                        {member.joined_at}
-                    </li>
-                ))}
-            </ul>
+            <ListUsers users={membersData} gymSlug={gymSlug} origin="kiosk" />
         </>
     )
 }

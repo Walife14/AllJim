@@ -18,9 +18,13 @@ interface UserData {
 type Props = {
     users: UserData[]
     gymSlug: string
+    origin?: 'kiosk' | 'management'
 }
 
-export default function ListUsers({ users, gymSlug }: Props) {
+export default function ListUsers({ users, gymSlug, origin }: Props) {
+
+    const link = origin && (origin === 'kiosk') ? `/${gymSlug}/kiosk/terminal/members/` : `/${gymSlug}/management/members/`
+
     return (
         <div className="bg-zinc-200 p-4 rounded-lg">
             {users ? (
@@ -43,7 +47,7 @@ export default function ListUsers({ users, gymSlug }: Props) {
                                 <span className="flex-1">{user.profiles.email}</span>
                                 <span className="flex-1">{user.profiles.phone}</span>
                                 <span className="flex-1 capitalize">{user.role}</span>
-                                <span className="w-12"><Link href={`/${gymSlug}/management/members/${user.profiles.id}`}><ExternalLink /></Link></span>
+                                <span className="w-12"><Link href={`${link}${user.profiles.id}`}><ExternalLink /></Link></span>
                             </li>
                         ))}
                     </ul>
