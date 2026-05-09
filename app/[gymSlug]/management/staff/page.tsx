@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
+import { ExternalLink, Mail } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
@@ -46,17 +47,25 @@ export default async function StaffPage({ params }: Props) {
         )
     }
     return (
-        <div>
-            <h1>Staff Accounts</h1>
+        <div className="flex flex-col gap-2">
+            <div className="bg-zinc-200 p-4 rounded-lg">
+                <h1>Staff Accounts</h1>
+                <p>Manage staff Kiosk credentials and security PINs. These logins allow your team to access the on-site terminal.</p>
+            </div>
 
-            <section className="flex">
+            <section className="flex gap-2 p-4 bg-zinc-200 rounded-lg">
                 {memberships.length === 0 && (
-                    <p>You do not have any accounts listed as staff yet! go to members to change the correct account to role of staff.</p>
+                    <p className="text-red-500">Your staff roster is empty.</p>
                 )}
                 {memberships.length > 0 && memberships.map((membership: MembershipWithProfile) => (
-                    <div key={membership.id} className="flex flex-col p-2 bg-neutral-200">
-                        <p>Email: <span>{membership.profiles.email}</span></p>
-                        <Link href={`/${slug}/management/staff/${membership.id}`}>Go to profile</Link>
+                    <div key={membership.id} className="flex flex-col gap-y-4 items-end bg-zinc-50 p-2 rounded-lg">
+                        <p className="flex gap-x-4">
+                            <Mail />
+                            <span title={membership.profiles.email}>
+                                {membership.profiles.email}
+                            </span>
+                        </p>
+                        <Link href={`/${slug}/management/staff/${membership.id}`}><ExternalLink /></Link>
                     </div>
                 ))}
             </section>

@@ -1,6 +1,5 @@
 
 // components
-import AttendanceStats from "@/app/components/management/AttendanceStats"
 import CheckInAnalytics from "./components/CheckInAnalytics"
 
 type Props = {}
