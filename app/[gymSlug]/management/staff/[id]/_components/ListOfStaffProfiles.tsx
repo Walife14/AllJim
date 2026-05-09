@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { format } from "date-fns"
+import { KeyRound, Trash2, UserRoundKey, UserRoundPen } from "lucide-react"
 
 type Props = {
     staffAccountId: string
@@ -26,15 +27,29 @@ export default async function ListOfStaffProfiles({ staffAccountId, gymId }: Pro
 
 
     return (
-        <ul className="flex flex-col gap-2 max-w-3xl">
+        <ul className="grid grid-cols-6 gap-4">
             {staffProfiles.length === 0 ? (
                 <li>No staff profiles yet. Add one to see it here.</li>
             ) : staffProfiles.map((profile) => (
-                <li key={profile.first_name + profile.last_name} className="grid grid-cols-4 items-center bg-neutral-200 rounded-lg p-2">
-                    <span>{profile.first_name}</span>
-                    <span>{profile.last_name}</span>
-                    <span>{profile.pin}</span>
-                    <span>{formatdate(profile.created_at)}</span>
+                <li key={profile.first_name + profile.last_name} className="flex flex-col gap-y-2 bg-zinc-50 p-4 rounded-lg">
+                    <div className="flex gap-x-2">
+                        <UserRoundKey />
+                        <span>{profile.first_name} {profile.last_name}</span>
+                    </div>
+                    <div className="flex items-center gap-x-2">
+                        <KeyRound />
+                        <span>{profile.pin}</span>
+                    </div>
+                    {/* for the created at perhaps create a button that reveals more metadata type of information and display it */}
+                    {/* <span className="text-sm ml-auto">{formatdate(profile.created_at)}</span>  */}
+                    <ul className="flex justify-end gap-2">
+                        <li>
+                            <Trash2 />
+                        </li>
+                        <li>
+                            <UserRoundPen />
+                        </li>
+                    </ul>
                 </li>
             ))}
 

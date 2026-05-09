@@ -55,10 +55,10 @@
   }
 
   .link-primary {
-    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg transition duration-100 text-center;
+    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg transition duration-100 text-center flex gap-x-2 items-center;
   }
   .link-primary:hover {
-    @apply bg-zinc-50 text-zinc-900 ring ring-inset ring-zinc-900
+    @apply bg-zinc-50 text-zinc-900 ring ring-inset ring-zinc-900 cursor-pointer;
   }
   .link-secondary {
     @apply ring ring-inset ring-zinc-900 px-4 py-2 rounded-lg

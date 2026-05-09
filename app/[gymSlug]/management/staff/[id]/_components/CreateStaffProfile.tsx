@@ -6,6 +6,7 @@ import { createStaffProfileAction, staffProfileResponse } from "@/app/actions/ma
 
 // components
 import { Modal } from "@/app/components/ui/Modal"
+import { UserRoundPlus } from "lucide-react"
 
 type Props = {
     id: string
@@ -20,7 +21,7 @@ export default function CreateStaffProfile({ id, gymId }: Props) {
 
     return (
         <>
-            <button onClick={() => setIsModalOpen(true)} className="p-2 bg-neutral-600 text-white rounded-lg">Create staff profile</button>
+            <button onClick={() => setIsModalOpen(true)} className="link-primary"><UserRoundPlus /> Add Profile</button>
 
             {isModalOpen && (
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Create Staff Profile">
@@ -44,7 +45,7 @@ export default function CreateStaffProfile({ id, gymId }: Props) {
                         {state.error && <p className="text-red-500">{state.error}</p>}
                         {state.success && <p className="text-green-500">Successfully added a new staff profile.</p>}
 
-                        <button type="submit" disabled={isPending}>{isPending ? 'Creating Staff Profile...' : 'Create Staff Profile'}</button>
+                        <button type="submit" disabled={isPending}>{isPending ? 'Creating Profile...' : 'Create Profile'}</button>
                     </form>
                 </Modal>
             )}

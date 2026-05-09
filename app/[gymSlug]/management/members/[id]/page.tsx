@@ -8,6 +8,7 @@ import Contact from "./_components/Contact"
 import StaffNotes from "./_components/StaffNotes"
 import AccessHistory from "./_components/AccessHistory"
 import BillingHistory from "./_components/BillingHistory"
+import { ChevronLeft } from "lucide-react"
 
 type Props = {
     params: Promise<{
@@ -57,7 +58,7 @@ export default async function MemberPage({ params }: Props) {
 
     return (
         <div>
-            <Link className="text-sm" href={`/${gymSlug}/management/members`}>Back</Link>
+            <Link href={`/${gymSlug}/management/members`} title="Back"><ChevronLeft /></Link>
             <div className="flex-1 grid grid-cols-2 gap-2">
                 {/* member Identification  */}
                 <ProfileHeader first_name={profile.first_name} last_name={profile.last_name} user_id={profile.id} joined_at={membership.joined_at} membershipId={membership.id} role={membership.role} />
