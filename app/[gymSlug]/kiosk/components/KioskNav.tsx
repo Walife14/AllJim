@@ -31,6 +31,9 @@ export default async function KioskNav({ gymSlug }: Props) {
                     <Link href={`/${gymSlug}/kiosk/terminal/check-in-history`}>Check-in History</Link>
                 </li>
                 <li>
+                    <Link href={`/${gymSlug}/kiosk/terminal/classes`}>Classes</Link>
+                </li>
+                <li>
                     <LogoutProfileButton />
                 </li>
             </ul>
