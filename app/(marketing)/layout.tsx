@@ -16,7 +16,7 @@ export default async function MarketingLayout({ children }: Props) {
     return (
         <>
             <Navbar user={user} />
-            <main className="w-screen overflow-hidden">
+            <main className="max-w-screen overflow-hidden">
                 {children}
             </main>
             <Footer />
