@@ -43,9 +43,9 @@ export default async function layout({ children, params }: Props) {
 
     return (
         <main className="grid grid-cols-10 h-dvh">
-            <div className="col-span-7 overflow-y-auto p-2 flex">
+            <div className="col-span-7 overflow-y-auto pl-2 pt-2 mb-2 flex">
                 <KioskNav gymSlug={gymSlug} />
-                <div className="pt-2 pl-2 pb-2 flex-1">
+                <div className="max-h-screen overflow-auto px-2 pb-2 flex-1">
                     {children}
                 </div>
             </div>
