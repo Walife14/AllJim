@@ -70,7 +70,7 @@ export default async function JoinPage({ params }: Props) {
     <main className="px-2 flex flex-col gap-y-4 my-12">
       <h1 className="text-center">Join</h1>
       <SignUpForm gymSlug={gymSlug} />
-      <p>Already have an account? <Link href={`/${gymSlug}/login`}>go to login</Link></p>
+      <p>Already have an account? <Link className="link" href={`/${gymSlug}/login`}>go to login</Link>.</p>
     </main>
   )
 }

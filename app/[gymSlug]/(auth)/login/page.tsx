@@ -15,10 +15,10 @@ export default async function LoginPage({ params }: Props) {
     return (
         <div className="flex flex-col gap-y-4">
             <h1 className="text-center">Login</h1>
-            
+
             <LoginForm gymSlug={slug} />
-            
-            <Link href={`/${slug}/join`}>Click here to join this gym if not yet a member.</Link>
+
+            <p>Not yet a member? <Link className="link" href={`/${slug}/join`}>Sign up to join this gym</Link>.</p>
         </div>
     )
 }
