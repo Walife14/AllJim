@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server"
 
 // utils
 import { formatDate } from "@/app/utils/formatDate/formatDate"
+import Link from "next/link"
+import { UserRound } from "lucide-react"
 
 type Props = {
     params: Promise<{
@@ -24,7 +26,7 @@ export default async function CheckInHistoryPage({ params }: Props) {
         .from('check_ins')
         .select(`id, membership_id, gym_id, created_at,
             memberships!inner (
-                profiles!inner ( first_name, last_name, email, phone )
+                profiles!inner ( id, first_name, last_name, email, phone )
             )
         `)
         .eq('gym_id', gymData.id)
@@ -35,15 +37,35 @@ export default async function CheckInHistoryPage({ params }: Props) {
         <>
             <h1>Check-in History</h1>
 
-            <ul>
-                {checkInData.map((checkIn: any, index: number) => (
-                    <li key={index}>
-                        {checkIn.memberships.profiles.first_name}
-                        {checkIn.memberships.profiles.last_name},
-                        checked in at {formatDate(checkIn.created_at)}.
-                    </li>
-                ))}
-            </ul>
+            <section className="flex flex-col gap-2">
+                <div className="bg-zinc-200 p-4 rounded-lg">
+                    <h2>Filters</h2>
+
+                    <div className="flex gap-2">
+                        <button className="link-primary">All</button>
+                        <button className="link-primary">Today</button>
+                    </div>
+                </div>
+
+                <ul className="bg-zinc-200 p-4 rounded-lg">
+                    {checkInData.map((checkIn: any, index: number) => (
+                        <li key={index} className="px-4 py-2 even:bg-zinc-50 rounded-lg flex items-end gap-x-2">
+                            <div className="flex-1">
+                                <span className="font-semibold">
+                                    {checkIn.memberships.profiles.first_name} {checkIn.memberships.profiles.last_name}
+                                </span>
+                                <p>
+                                    Checked in at {formatDate(checkIn.created_at)}.
+                                </p>
+                            </div>
+                            <Link className="link-primary" href={`/${gymSlug}/kiosk/terminal/members/${checkIn.memberships.profiles.id}`}>
+                                <UserRound />
+                                Open Profile
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </section>
         </>
     )
 }
