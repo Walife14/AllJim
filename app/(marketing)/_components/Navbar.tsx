@@ -1,9 +1,12 @@
 
-import { UserData } from "@/app/actions/auth/get-user"
 import Link from "next/link"
-import SignOutButton from "../auth/signOutButton"
 import Image from "next/image"
 
+// components
+import SignOutButton from "@/app/components/auth/signOutButton"
+
+// actions
+import { UserData } from "@/app/actions/auth/get-user"
 
 type Props = {
     user: UserData | null
@@ -11,8 +14,9 @@ type Props = {
 
 export default async function Navbar({ user }: Props) {
     return (
-        <header className="fixed z-50 w-5xl mt-4 left-1/2 -translate-x-1/2">
+        <header className="fixed w-full z-50 px-2 mt-2 md:mt-4 md:left-1/2 md:-translate-x-1/2 md:w-5xl">
             <nav className="w-full p-2 md:px-8 flex justify-between items-center bg-zinc-900/70 backdrop-blur-lg text-zinc-50 rounded-lg shadow-sm">
+            {/* <nav className="w-full p-2 md:px-8 flex justify-between items-center bg-zinc-900/70 backdrop-blur-lg text-zinc-50 rounded-lg shadow-sm"> */}
                 <Link href="/">
                     <Image
                         src="/assets/brand/logo.svg"

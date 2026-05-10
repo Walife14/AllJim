@@ -38,7 +38,7 @@ export default async function Home({ }: Props) {
   return (
     <div>
       <section>
-        <div className='relative max-h-[70vh] overflow-hidden'>
+        <div className='relative md:max-h-[70vh] overflow-hidden'>
           <Image
             src="/assets/marketing/receptionist.png"
             alt="Gym Receptionist"
@@ -46,13 +46,12 @@ export default async function Home({ }: Props) {
             height={0}
             sizes="100vw"
             loading="eager"
-            style={{ width: '100%', height: 'auto' }}
-            className="object-center"
+            className="object-center w-full h-auto"
           />
         </div>
       </section>
 
-      <div className='max-w-5xl mx-auto flex flex-col gap-y-8'>
+      <div className='max-w-5xl mx-2 md:mx-auto flex flex-col gap-y-8'>
 
         {user && (
           <section className='mt-10'>
@@ -71,7 +70,7 @@ export default async function Home({ }: Props) {
         {!user && (
           <section className='mt-8'>
             <h1 className='text-center'>AllJim: Gym Management, Simplified.</h1>
-            <p className='text-center text-2xl'>
+            <p className='text-center text-lg md:text-2xl'>
               Focus on your athletes, not your paperwork.
               Effortlessly manage memberships, track finances,
               and run your front desk with our dedicated staff kiosk and admin panel.
@@ -87,7 +86,7 @@ export default async function Home({ }: Props) {
         {/* features */}
         <section id="features">
           <h2 className='text-center'>Features</h2>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="flex flex-col gap-y-2">
               <h3>Management</h3>
               <p className='font-semibold text-sm'>Your Command Center</p>
@@ -133,14 +132,14 @@ export default async function Home({ }: Props) {
               From boutique startups to global franchises, choose the plan built to scale with your ambition.
             </p>
 
-            <div className='grid grid-cols-3'>
+            <div className='grid md:grid-cols-3 gap-2'>
 
               {/* Launch Plan */}
-              <div className='p-8 border-l border-t rounded-t-lg flex flex-col gap-y-2'>
+              <div className='p-2 md:p-8 border md:border-r-0 md:border-b-0 rounded-lg md:rounded-b-none flex flex-col items-start md:items-stretch gap-y-2'>
                 <h3>Launch</h3>
                 <p>Perfect for boutique gyms and new startups.</p>
                 <div>
-                  <strong className='text-4xl'>&pound;49</strong> <span className='text-sm'>/month</span>
+                  <strong className='text-xl md:text-4xl'>&pound;49</strong> <span className='text-sm'>/month</span>
                 </div>
                 <Link href="/signup?plan=launch" className='link-primary'>Get started</Link>
                 <ul className='flex flex-col gap-y-2'>
@@ -166,14 +165,14 @@ export default async function Home({ }: Props) {
               </div>
 
               {/* Scale Plan */}
-              <div className='p-8 border-x border-t rounded-t-lg bg-zinc-200 scale-105 flex flex-col gap-y-2'>
+              <div className='p-2 md:p-8 border md:border-b-0 rounded-lg md:rounded-b-none bg-zinc-200 md:scale-105 flex flex-col items-start md:items-stretch gap-y-2'>
                 <div className='flex items-start gap-x-2'>
                   <h3>Scale</h3>
                   <span className='text-xs bg-zinc-900 px-2 py-1 rounded-md text-zinc-50'>RECOMMENDED</span>
                 </div>
                 <p>For established gyms ready to automate operations.</p>
                 <div>
-                  <strong className='text-4xl'>&pound;79</strong> <span className='text-sm'>/month</span>
+                  <strong className='text-xl md:text-4xl'>&pound;79</strong> <span className='text-sm'>/month</span>
                 </div>
                 <Link href="/signup?plan=scale" className='link-primary'>Get started</Link>
                 <ul className='flex flex-col gap-y-2'>
@@ -193,10 +192,10 @@ export default async function Home({ }: Props) {
               </div>
 
               {/* Franchise Plan */}
-              <div className='p-8 border-r border-t rounded-t-lg flex flex-col gap-y-2'>
+              <div className='p-2 md:p-8 border md:border-l-0 md:border-b-0 rounded-lg md:rounded-b-none flex flex-col items-start md:items-stretch gap-y-2'>
                 <h3>Franchise</h3>
                 <p>Enterprise solutions for multi-location networks.</p>
-                <span className="text-4xl font-bold">Custom</span>
+                <span className="text-xl md:text-4xl font-bold">Custom</span>
                 <Link href="/signup?plan=franchise" className='link-primary'>Get started</Link>
                 <ul className='flex flex-col gap-y-2'>
                   <li className='flex gap-x-1'>
@@ -222,7 +221,7 @@ export default async function Home({ }: Props) {
         <section className='flex flex-col gap-y-4 my-20'>
           <h3 className='text-center'>Join the AllJim Community</h3>
           <p className='text-center'>From feature drops to success stories, subscribe to get the latest gym management insights and news.</p>
-          <form className='max-w-xl mx-auto'>
+          <form className='md:max-w-xl mx-auto w-full'>
             <div className='flex border rounded-full'>
               <input className='flex-1 py-2 pl-4 pr-2 ring-0 rounded-l-full focus-visible:ring-0' type="text" placeholder="Email address" />
               <button className='bg-zinc-900 text-zinc-50 py-2 px-4 rounded-r-full cursor-pointer' type="submit" disabled>Subscribe</button>

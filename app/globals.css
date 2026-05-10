@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #fefefe;
@@ -46,7 +46,6 @@
   h4 {
     @apply text-lg;
   }
-
 }
 
 @layer components {
@@ -61,13 +60,14 @@
     @apply bg-zinc-50 text-zinc-900 ring ring-inset ring-zinc-900 cursor-pointer;
   }
   .link-secondary {
-    @apply ring ring-inset ring-zinc-900 px-4 py-2 rounded-lg
+    @apply ring ring-inset ring-zinc-900 px-4 py-2 rounded-lg;
   }
   .link-secondary:hover {
-    @apply ring-0 bg-zinc-900 text-zinc-50
+    @apply ring-0 bg-zinc-900 text-zinc-50;
   }
-    .link-primary:active, .link-secondary:active {
-    @apply scale-95
+  .link-primary:active,
+  .link-secondary:active {
+    @apply scale-95;
   }
 
   .feature-card {

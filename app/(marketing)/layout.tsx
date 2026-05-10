@@ -2,8 +2,8 @@ import { getUserProfileAction } from "../actions/auth/get-user";
 import { getCurrentUserGymAction } from "../actions/auth/get-user-gym";
 
 // components
-import Navbar from "../components/marketing/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./_components/Navbar";
+import Footer from "./_components/Footer";
 
 type Props = {
     children: React.ReactNode;
@@ -16,7 +16,7 @@ export default async function MarketingLayout({ children }: Props) {
     return (
         <>
             <Navbar user={user} />
-            <main>
+            <main className="w-screen overflow-hidden">
                 {children}
             </main>
             <Footer />
