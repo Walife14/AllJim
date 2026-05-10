@@ -1,9 +1,9 @@
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 // components
-import { cookies } from "next/headers"
 import Keypad from "./components/Keypad"
-import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
+import SignOutButton from "@/app/components/auth/signOutButton"
 
 type Props = {
     params: Promise<{
@@ -29,7 +29,9 @@ export default async function KioskPage({ params }: Props) {
                 <h1 className="text-center">Terminal Login</h1>
                 <Keypad gymSlug={gymSlug} />
                 <ul className="mt-2">
-                    <li className="text-center underline text-neutral-500 cursor-pointer">Log out of account.</li>
+                    <li className="text-center underline text-neutral-500 cursor-pointer">
+                        <SignOutButton mode="dark" />
+                    </li>
                 </ul>
             </div>
         </div>
