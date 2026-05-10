@@ -36,7 +36,7 @@ export async function staffProfileLoginAction(state: staffProfileLoginResponse, 
             .match({pin: pin, user_id: user.id, gym_id: gym.id})
             .single()
 
-        if (staffProfileLoginError) throw new Error(staffProfileLoginError.message || 'Could not grab a staff profile.')
+        if (staffProfileLoginError) throw new Error(staffProfileLoginError.hint || 'Could not grab a staff profile.')
 
         cookieStore.set('active_staff_id', staffProfile.id, {
             httpOnly: true,

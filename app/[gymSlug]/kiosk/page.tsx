@@ -25,7 +25,7 @@ export default async function KioskPage({ params }: Props) {
 
     return (
         <div className="h-screen w-screen absolute flex justify-center items-center">
-            <div className="md:min-w-lg bg-neutral-100 p-4 rounded-lg">
+            <div className="w-full mx-2 md:mx-0 md:min-w-lg md:w-auto p-4 rounded-lg bg-zinc-200">
                 <h1 className="text-center">Terminal Login</h1>
                 <Keypad gymSlug={gymSlug} />
                 <ul className="mt-2">
