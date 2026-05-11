@@ -1,6 +1,9 @@
 import * as z from 'zod';
 
 export type FormState = {
+    fields?: {
+        email?: string
+    }
     message?: string;
     errors?: {
         email?: string[];

@@ -12,6 +12,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
 
     // grab the gymSlug if exists for redirect
     const gymSlug = formData.get('gymSlug')?.toString()
+    const emailInput = formData.get('email')?.toString()
 
     // validate form fields
     const validatedFields = LoginFormSchema.safeParse({
@@ -22,6 +23,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
     // if any form fields are invalid, return early
     if (!validatedFields.success) {
         return {
+            fields: { email: emailInput },
             errors: validatedFields.error.flatten().fieldErrors,
         }
     }
@@ -33,6 +35,7 @@ export async function login(state: FormState, formData: FormData): Promise<FormS
 
     if (signInError || !user) {
         return {
+            fields: { email: emailInput },
             message: signInError?.message || 'no user'
         }
     }

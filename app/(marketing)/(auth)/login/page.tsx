@@ -31,14 +31,15 @@ export default function Login({ }: Props) {
         <form action={action} className="form-basic">
           <div>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email address" />
+            <input type="email" id="email" name="email" placeholder="Email address" defaultValue={state?.fields?.email} required />
           </div>
           {state.errors?.email && <p>{state.errors.email}</p>}
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" />
+            <input type="password" id="password" name="password" placeholder="Password" minLength={8} required />
           </div>
-          {state.errors?.password && <p>{state.errors.password}</p>}
+          {state.errors?.password && <p className="text-red-500 text-center">{state.errors.password}</p>}
+          {state.message && <p className="text-red-500 text-center">{state.message}</p>}
 
           <button type="submit" disabled={pending}>{pending ? 'Logging in...' : 'Login'}</button>
         </form>
