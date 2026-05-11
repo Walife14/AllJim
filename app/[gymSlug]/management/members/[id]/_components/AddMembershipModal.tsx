@@ -25,7 +25,7 @@ export default function AddMembershipModal({ membershipId, isOpen, onClose }: Pr
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Extend Membership">
-            <form action={formAction}>
+            <form action={formAction} className='form-basic'>
                 <input type="hidden" name="membershipId" value={membershipId} />
 
                 {/* radio for unit type */}
