@@ -27,9 +27,9 @@ export default async function MembersPage({ params }: Props) {
     const { data: membersData, error: membersError } = await supabase
         .from('memberships')
         .select(`
-            role, status, expires_at, joined_at,
-            profiles!inner (id, first_name, last_name, email, phone)
-            `)
+            user_id, role, status, expires_at, joined_at, legal_first_name, legal_last_name, dob,
+            profiles!inner (email, phone)
+        `)
         .match({ gym_id: gymData.id, role: 'member' })
 
     if (membersError) {

@@ -58,7 +58,7 @@ export async function verifyMember(state: checkInMemberResponse, formData: FormD
         // check with backend the user_id from payload which is the payload.sub
         const { data: membership, error: membershipError } = await supabase
             .from('memberships')
-            .select(`id, expires_at, status, profiles!inner (first_name, last_name)`)
+            .select(`id, expires_at, status, legal_first_name, legal_last_name`)
             .match({ user_id: payload.sub, gym_id: gym.id })
             .single()
             .overrideTypes<MembershipWithProfile>()
@@ -93,8 +93,8 @@ export async function verifyMember(state: checkInMemberResponse, formData: FormD
             success: true,
             data: {
                 membership_id: membership.id,
-                first_name: membership.profiles.first_name,
-                last_name: membership.profiles.last_name,
+                first_name: membership.legal_first_name,
+                last_name: membership.legal_last_name,
                 status: membership.status,
                 created_at: checkInData.created_at
             }

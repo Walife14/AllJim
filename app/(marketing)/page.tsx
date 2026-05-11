@@ -56,7 +56,7 @@ export default async function Home({ }: Props) {
         {user && (
           <section className='mt-10'>
             <h1 className='text-center'>Your Gyms</h1>
-            <p className='text-center'>Welcome back {user.first_name}.</p>
+            <p className='text-center'>Signed in as {user.email}.</p>
             <ul className='flex justify-center gap-x-8 my-10'>
               {gyms && gyms.map((gym: any, index: number) => (
                 <li key={index}>

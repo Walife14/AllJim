@@ -30,6 +30,10 @@ export default function SignUpForm({ gymSlug }: Props) {
             </div>
             {state?.errors?.lastName && <p>{state.errors.lastName}</p>}
             <div>
+                <label htmlFor="dob">Date of Birth *</label>
+                <input type="date" id="dob" name="dob" required/>
+            </div>
+            <div>
                 <label htmlFor="email">Email *</label>
                 <input type="email" id="email" name="email" placeholder="Email address" required />
             </div>

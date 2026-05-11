@@ -31,9 +31,9 @@ export default async function TransactionsPage({ params }: Props) {
       transaction_type, payment_method,
       created_at, metadata,
       memberships!inner (
-        user_id,
+        user_id, legal_first_name, legal_last_name,
         profiles!inner (
-          first_name, last_name, email
+          email, phone
         )
       )
       `)
@@ -56,8 +56,8 @@ export default async function TransactionsPage({ params }: Props) {
       <ul>
         {membershipHistoryData.map((transaction: any, index: number) => (
           <li key={index}>
-            {transaction.memberships.profiles.first_name},
-            {transaction.memberships.profiles.last_name},
+            {transaction.memberships.legal_first_name},
+            {transaction.memberships.legal_last_name},
             {transaction.amount_added},
             {transaction.unit},
             {transaction.metadata.staff_name},

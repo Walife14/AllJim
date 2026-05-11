@@ -97,6 +97,8 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
         confirmPassword: formData.get("confirmPassword")
     })
 
+    const dob = formData.get('dob')
+
     // if any form fields are invalid, return early
     if (!validatedFields.success) {
         return {
@@ -114,6 +116,7 @@ export async function signup(state: FormState, formData: FormData): Promise<Form
             data: {
                 first_name: firstName.trim(), // unsure there are no spaces before and after
                 last_name: lastName.trim(), // unsure there are no spaces before and after
+                dob: dob,
                 gym_id: gym_id
             }
         }

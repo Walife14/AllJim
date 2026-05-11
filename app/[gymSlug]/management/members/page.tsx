@@ -14,16 +14,7 @@ type Props = {
     }>
 }
 
-interface MemberWithProfile {
-    status: string
-    role: string
-    profiles: {
-        first_name: string
-        last_name: string
-    }
-}
-
-const VALID_STATUSES = ['active', 'inactive']
+const VALID_STATUSES = ['active', 'frozen', 'banned']
 
 export default async function MembersPage({ params, searchParams }: Props) {
     const { gymSlug: slug } = await params
@@ -47,12 +38,14 @@ export default async function MembersPage({ params, searchParams }: Props) {
     let query = supabase
         .from('memberships')
         .select(`
+            user_id,
             status,
             role,
+            legal_first_name,
+            legal_last_name,
+            dob,
+            expires_at,
             profiles!inner (
-                id,
-                first_name,
-                last_name,
                 email,
                 phone
             )

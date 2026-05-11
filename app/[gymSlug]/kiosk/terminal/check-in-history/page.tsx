@@ -26,7 +26,8 @@ export default async function CheckInHistoryPage({ params }: Props) {
         .from('check_ins')
         .select(`id, membership_id, gym_id, created_at,
             memberships!inner (
-                profiles!inner ( id, first_name, last_name, email, phone )
+                user_id, legal_first_name, legal_last_name, dob,
+                profiles!inner ( email, phone )
             )
         `)
         .eq('gym_id', gymData.id)
@@ -52,7 +53,7 @@ export default async function CheckInHistoryPage({ params }: Props) {
                         <li key={index} className="px-4 py-2 even:bg-zinc-50 rounded-lg flex items-end gap-x-2">
                             <div className="flex-1">
                                 <span className="font-semibold">
-                                    {checkIn.memberships.profiles.first_name} {checkIn.memberships.profiles.last_name}
+                                    {checkIn.memberships.legal_first_name} {checkIn.memberships.legal_last_name}
                                 </span>
                                 <p>
                                     Checked in at {formatDate(checkIn.created_at)}.
