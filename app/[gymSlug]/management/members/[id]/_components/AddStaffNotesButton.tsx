@@ -12,7 +12,7 @@ export default function AddStaffNotesButton({ membershipId }: Props) {
 
     return (
         <>
-            <button className="bg-neutral-600 text-white p-2 text-center rounded-lg cursor-pointer" onClick={() => setIsModalOpen(true)}>Add Note</button>
+            <button className="open-btn" onClick={() => setIsModalOpen(true)}>Add Note</button>
 
             {isModalOpen && (
                 <AddStaffNotesModal membershipId={membershipId} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

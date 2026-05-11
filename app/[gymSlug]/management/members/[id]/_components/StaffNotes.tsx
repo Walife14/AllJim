@@ -1,8 +1,10 @@
 import { createClient } from "@/lib/supabase/server"
-import { format } from "date-fns"
 
 // components
 import AddStaffNotesButton from "./AddStaffNotesButton"
+
+// utils
+import { formatDate } from "@/app/utils/formatDate/formatDate"
 
 type Props = {
     membershipId: string
@@ -22,28 +24,26 @@ export default async function StaffNotes({ membershipId }: Props) {
         )
     }
 
-    function formatDate(date: string) {
-        return format(new Date(date), 'dd/MM/yyyy')
-    }
-
     return (
-        <div className="col-span-2 bg-neutral-200 p-4 rounded-lg">
+        <div className="col-span-2 bg-zinc-200 p-4 rounded-lg">
             <h2 className="text-center">Staff Notes</h2>
-            <ul className="flex flex-col gap-1">
+            <ul className="flex flex-col gap-2">
                 {staffNotes ? staffNotes.map((note, index) => (
-                    <li key={index} className="flex items-start gap-2 not-odd:bg-neutral-50/50 p-2">
-                        <div className="text-end text-sm">
-                            <p>Created by {note.metadata.staff_name}</p>
-                            <p>On {note.metadata.entry_point}</p>
-                            <p>{formatDate(note.created_at)}</p>
-                        </div>
-                        <p className="bg-orange-500 text-white p-2 flex rounded-lg">{note.category}</p>
-                        <p className="bg-white p-2 rounded-lg">
+                    <li key={index} className="flex flex-col p-2 bg-zinc-50 rounded-lg">
+                        <p className="p-2 rounded-lg">
                             {note.content}
                         </p>
+                        <div className="text-sm flex items-center gap-x-2 px-2 pt-2">
+                            <dt>Created By</dt>
+                            <dd>{note.metadata.staff_name}</dd>
+                            <span>{formatDate(note.created_at)}</span>
+                            <span className="bg-amber-500 px-2 py-1 rounded-lg ml-auto text-zinc-50">{note.category}</span>
+                        </div>
                     </li>
                 )) : (
-                    <li>No notes added yet</li>
+                    <li>
+                        <p>No notes added yet</p>
+                    </li>
                 )}
             </ul>
             <div className="mt-2 flex justify-center">

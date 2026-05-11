@@ -27,7 +27,7 @@ export default function AddStaffNotesModal({ membershipId, isOpen, onClose }: Pr
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Create Note">
-            <form action={formAction}>
+            <form action={formAction} className='form-basic'>
                 <input type="hidden" name="membershipId" value={membershipId} />
 
                 <label className='flex flex-col'>
