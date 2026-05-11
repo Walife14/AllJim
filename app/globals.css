@@ -81,7 +81,7 @@
   }
 
   .open-btn {
-    @apply gap-2 px-4 py-2 text-sm font-medium transition-all duration-100 rounded-lg cursor-pointer bg-zinc-900 text-zinc-50 hover:bg-zinc-50 hover:text-blue-500
+    @apply gap-2 px-4 py-2 text-center text-sm font-medium transition-all duration-100 rounded-lg cursor-pointer bg-zinc-900 text-zinc-50 hover:bg-zinc-50 hover:text-blue-500
   }
   .open-btn:disabled {
     @apply bg-neutral-600 text-zinc-50;
