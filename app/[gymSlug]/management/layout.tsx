@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 // components
-import ManagementNavbar from "@/app/components/management/ManagementNavbar";
+import ManagementNavbar from "@/app/[gymSlug]/management/_components/ManagementNavbar";
 import { createClient } from "@/lib/supabase/server";
 
 type Props = {

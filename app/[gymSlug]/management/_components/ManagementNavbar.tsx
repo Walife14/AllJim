@@ -1,6 +1,6 @@
 'use client'
 
-import { Boxes, ChartLine, House, Megaphone, Settings, ShieldUser, UsersRound } from 'lucide-react'
+import { Boxes, ChartLine, House, Megaphone, Settings, ShieldUser, Store, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -19,6 +19,7 @@ export default function ManagementNavbar({ gymSlug }: Props) {
         { href: `/${gymSlug}/management/revenue`, label: 'Revenue', icon: <ChartLine /> },
         { href: `/${gymSlug}/management/equipment`, label: 'Equipment', icon: <Boxes /> },
         { href: `/${gymSlug}/management/marketing`, label: 'Marketing', icon: <Megaphone /> },
+        { href: `/${gymSlug}/management/gym-profile`, label: 'Gym Profile', icon: <Store /> },
         { href: `/${gymSlug}/management/settings`, label: 'Settings', icon: <Settings /> },
     ]
 

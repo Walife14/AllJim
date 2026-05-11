@@ -1,6 +1,6 @@
 
 // components
-import CheckInAnalytics from "./components/CheckInAnalytics"
+import CheckInAnalytics from "./_components/CheckInAnalytics"
 
 type Props = {}
 
