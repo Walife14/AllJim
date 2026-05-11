@@ -89,11 +89,23 @@
   .form-basic div input {
     @apply border border-gray-300 p-2 bg-gray-50 rounded-lg;
   }
-  .form-form div input:focus {
+  .form-basic div input:focus {
     @apply bg-white outline-green-500;
   }
+  .form-basic label select {
+    @apply p-2 w-full outline-none cursor-pointer border border-zinc-900 rounded-lg;
+  }
+  .form-basic label select:focus {
+    @apply border-blue-500 ring-1 ring-blue-500;
+  }
   .form-basic button {
-    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg mx-auto min-w-1/2;
+    @apply bg-zinc-900 text-zinc-50 px-4 py-2 rounded-lg mx-auto min-w-1/2 cursor-pointer;
+  }
+  .form-basic button:hover {
+    @apply bg-zinc-50 text-zinc-900 ring ring-inset ring-zinc-900;
+  }
+  .form-basic button:active {
+    @apply scale-95;
   }
 }
 

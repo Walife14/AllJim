@@ -19,11 +19,11 @@ export default function ManageRoleModal({ isOpen, onClose, membershipId }: Props
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={"Role Management"}>
-      <form action={formAction}>
+      <form action={formAction} className="form-basic">
         <input type="hidden" name="membershipId" value={membershipId} />
 
-        <label>
-          Select new role:
+        <label className="flex flex-col gap-2">
+          <span>Select new role</span>
           <select name="newRole">
             <option value="member">Member</option>
             <option value="staff">Staff</option>

@@ -17,6 +17,21 @@ type Props = {
     }>
 }
 
+interface MembershipWithContact {
+    id: string
+    legal_first_name: string
+    legal_last_name: string
+    dob: string
+    role: string
+    status: string
+    joined_at: string
+    expires_at: string
+    profiles: {
+        email: string
+        phone: string
+    }
+}
+
 export default async function MemberPage({ params }: Props) {
     const { id: userId, gymSlug } = await params
     const supabase = await createClient()
@@ -33,26 +48,16 @@ export default async function MemberPage({ params }: Props) {
     // TODO: grab the user membership using id and gymslug
     const { data: membership } = await supabase
         .from('memberships')
-        .select('id, role, status, joined_at, expires_at')
+        .select(`id, legal_first_name, legal_last_name, dob, role, status, joined_at, expires_at,
+            profiles!inner ( email, phone )
+        `)
         .match({ user_id: userId, gym_id: gym.id })
         .single()
+        .overrideTypes<MembershipWithContact>()
 
     if (!membership) {
         return (
             <p>Could not find the membership.</p>
-        )
-    }
-
-    // TODO: grab the user profile
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('id, first_name, last_name, email, phone')
-        .eq('id', userId)
-        .single()
-
-    if (!profile) {
-        return (
-            <p>Could not grab their profile.</p>
         )
     }
 
@@ -61,13 +66,13 @@ export default async function MemberPage({ params }: Props) {
             <Link href={`/${gymSlug}/management/members`} title="Back"><ChevronLeft /></Link>
             <div className="flex-1 grid grid-cols-2 gap-2">
                 {/* member Identification  */}
-                <ProfileHeader first_name={profile.first_name} last_name={profile.last_name} user_id={profile.id} joined_at={membership.joined_at} membershipId={membership.id} role={membership.role} />
+                <ProfileHeader first_name={membership.legal_first_name} last_name={membership.legal_last_name} dob={membership.dob} user_id={userId} joined_at={membership.joined_at} membershipId={membership.id} role={membership.role} />
 
                 {/* membership status */}
                 <MembershipStatus membershipId={membership.id} status={membership.status} expires_at={membership.expires_at} />
 
                 {/* contact information */}
-                <Contact email={profile.email} phone={profile.phone} />
+                <Contact email={membership.profiles.email} phone={membership.profiles.phone} />
 
                 {/* staff notes */}
                 <StaffNotes membershipId={membership.id} />

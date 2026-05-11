@@ -54,7 +54,7 @@ export default function ListUsers({ users, gymSlug, origin }: Props) {
                                 <span className="flex-1 capitalize">{user.role}</span>
                                 <span className="flex-1 capitalize">{user.status}</span>
                                 <span className="flex-1">{formatDate(user.expires_at) === 'N/A' ? 'No Membership' : formatDate(user.expires_at)}</span>
-                                <span className="w-12"><Link href={`${link}${user.profiles.id}`}><ExternalLink /></Link></span>
+                                <span className="w-12"><Link href={`${link}${user.user_id}`}><ExternalLink /></Link></span>
                             </li>
                         ))}
                     </ul>
