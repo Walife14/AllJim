@@ -61,6 +61,18 @@ export default async function MemberPage({ params }: Props) {
         )
     }
 
+    // grab the check_ins associated with the member we are viewing for tap in history
+    const { data: checkInHistory, error: checkInHistoryError } = await supabase
+        .from('check_ins')
+        .select('created_at')
+        .match({ membership_id: membership.id, gym_id: gym.id })
+
+    if (checkInHistoryError) {
+        return (
+            <p className="text-red-500">Could not fetch check in history.</p>
+        )
+    }
+
     return (
         <div>
             <Link href={`/${gymSlug}/management/members`} title="Back"><ChevronLeft /></Link>
@@ -78,10 +90,10 @@ export default async function MemberPage({ params }: Props) {
                 <StaffNotes membershipId={membership.id} />
 
                 {/* access history: their list of tap-ins into the gym; average weekly visits */}
-                <AccessHistory />
+                <AccessHistory checkInHistory={checkInHistory} />
 
                 {/* billing history: transation list: date of payment, amount paid, time added if gym membership, staff who processed */}
-                <BillingHistory /> 
+                <BillingHistory />
             </div>
         </div>
     )
